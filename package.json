@@ -4,7 +4,8 @@
   "scripts": {
     "start": "concurrently \"npm run start --prefix backend\" \"npm run start --prefix frontend\"",
     "server": "npm start --prefix backend",
-    "client": "npm start --prefix frontend"
+    "client": "npm start --prefix frontend",
+    "install-all": "npm install && npm install --prefix backend && npm install --prefix frontend"
   },
   "devDependencies": {
     "concurrently": "^9.0.1",
