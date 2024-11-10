@@ -1,20 +1,38 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
 const dotenv = require('dotenv');
-const app = express();
-const port = 6000;
+const cors = require('cors');
+const path = require('path');
+const connectDB = require('./config/db');
+
 
 dotenv.config();
+const app = express();
+app.use(cors({ origin: "*" }));
+app.use(express.json());
 
-app.get('/api', (req, res) => {
-    res.send('Hello from the Node.js backend!');
-});
+const PORT = process.env.PORT || 6900;
 
+// const __dirname = path.resolve();
+
+const authRoute = require('./routes/auth.routes');
+app.use('/api/auth', authRoute);
+
+//default route
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Welcome to the server');
 });
 
-app.listen(port, () => {
-    console.log(`Backend server is running on http://localhost:${port}`);
+
+
+// if (process.env.NODE_ENV === "production") {
+//     app.use(express.static(path.join(__dirname, "../frontend/dist")));
+//     app.get("*", (req, res) => {
+//         res.sendFile(path.resolve(__dirname, "..", "frontend", "dist", "index.html"));
+//     });
+// }
+
+app.listen(PORT, () => {
+    connectDB();
+    console.log(`Server started at http://localhost:${PORT}`);
 });
+
