@@ -10,13 +10,21 @@ export const AuthProvider = ({ children }) => {
     const login = async (userData) => {
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, userData);
-            localStorage.setItem('token', response.data.token);
-            const userDataFromToken = JSON.parse(atob(response.data.token.split('.')[1])); // Decode token to get user info
-            setUser({ id: userDataFromToken.id, username: userDataFromToken.username });
+            const token = response.data.token;
+
+            localStorage.setItem('token', token);
+
+            const userDataFromToken = JSON.parse(atob(token.split('.')[1])); // Decode token payload
+            setUser({
+                id: userDataFromToken.id,
+                username: userDataFromToken.username,
+                role: userDataFromToken.role,
+            });
         } catch (error) {
-            console.error("Login error:", error.response?.data.message || error.message);
+            console.error("Login error:", error.response?.data?.message || error.message);
         }
     };
+
     const register = async (userData) => {
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, userData);
@@ -38,7 +46,11 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             // Decode the token to get user data if it's a JWT
             const userData = JSON.parse(atob(token.split('.')[1])); // Decode the token payload
-            setUser({ id: userData.id, username: userData.username, token });
+            setUser({
+                id: userData.id,
+                username: userData.username,
+                role: userData.role,
+            });
             // console.log('User loaded from token:', decodedToken); // Debug log
 
         }

@@ -17,6 +17,9 @@ const PORT = process.env.PORT || 6900;
 const authRoute = require('./routes/auth.routes');
 app.use('/api/auth', authRoute);
 
+const roomRoute = require('./routes/room.routes');
+app.use('/api/rooms', roomRoute);
+
 //default route
 app.get('/', (req, res) => {
     res.send('Welcome to the server');
