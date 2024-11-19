@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -10,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (userData) => {
         try {
-            const response = await axios.post('http://localhost:6900/api/auth/login', userData);
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, userData);
             localStorage.setItem('token', response.data.token);
             const userDataFromToken = JSON.parse(atob(response.data.token.split('.')[1])); // Decode token to get user info
             setUser({ id: userDataFromToken.id, username: userDataFromToken.username });
@@ -20,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     };
     const register = async (userData) => {
         try {
-            const response = await axios.post('http://localhost:6900/api/auth/register', userData);
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, userData);
             return response.data; // Return the response for success indication
         } catch (error) {
             console.error("Registration error:", error.response?.data.message || error.message);
