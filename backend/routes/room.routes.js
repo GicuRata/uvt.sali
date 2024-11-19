@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post('/add-room', authenticateToken('admin'), addRoom);
 
-router.get('/get-rooms', getRooms);
+router.get('/get-rooms', authenticateToken(), getRooms);
 
 module.exports = router;

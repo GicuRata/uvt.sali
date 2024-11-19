@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import AddRoom from './pages/AddRoom';
 import AdminRegister from './pages/AdminRegistration';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminProtectedRoute from './components/AdminRoute';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create-admin" element={<AdminRegister />} />
-        <Route path="/admin/add-room" element={<AddRoom />} />
+        <Route path="/admin/add-room" element={<AdminProtectedRoute><AddRoom /></AdminProtectedRoute>} />
       </Routes>
     </Router>
   );

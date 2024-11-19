@@ -11,7 +11,10 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchRooms = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/rooms/get-rooms`);
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/rooms/get-rooms`,
+                    { headers: { 'Authorization': `Bearer ${token}` } }
+                );
                 setRooms(response.data.rooms);
             } catch (error) {
                 console.error('Failed to fetch rooms:', error);
