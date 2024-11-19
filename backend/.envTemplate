@@ -1,0 +1,3 @@
+MONGO_URI=mongo_connection_uri_here
+PORT=6900
+JWT_SECRET=write_some_long_text_here_you_can_even_leave_this_one_if_your_a_lazy_
