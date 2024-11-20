@@ -24,6 +24,7 @@ function Login() {
                 <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
                 <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
                 <button type="submit">Login</button>
+                <button type="button" onClick={() => navigate('/register')}>Go To Register</button>
             </form>
         </div>
     );

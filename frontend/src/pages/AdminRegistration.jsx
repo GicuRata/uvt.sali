@@ -17,7 +17,12 @@ const AdminRegister = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/create-admin`, formData);
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/create-admin`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setMessage(response.data.message);
         } catch (error) {
             setMessage(error.response?.data?.message || 'An error occurred');

@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Container, TextField, Button, Typography, Box, Paper } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
-const AddRoom = () => {
+const EditRoom = () => {
+    const { roomId } = useParams();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         location: '',
@@ -12,7 +14,29 @@ const AddRoom = () => {
         description: '',
     });
     const [message, setMessage] = useState('');
-    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchRoomDetails = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/rooms/get-room/${roomId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const room = response.data.room;
+                setFormData({
+                    name: room.name,
+                    location: room.location,
+                    capacity: room.capacity,
+                    equipment: room.equipment.join(', '),
+                    description: room.description,
+                });
+            } catch (error) {
+                setMessage('Failed to fetch room details');
+            }
+        };
+
+        fetchRoomDetails();
+    }, [roomId]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,19 +48,12 @@ const AddRoom = () => {
             const token = localStorage.getItem('token');
             const config = { headers: { Authorization: `Bearer ${token}` } };
 
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/rooms/add-room`, {
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/rooms/edit-room/${roomId}`, {
                 ...formData,
                 equipment: formData.equipment.split(',').map((item) => item.trim()),
             }, config);
 
             setMessage(response.data.message);
-            setFormData({
-                name: '',
-                location: '',
-                capacity: '',
-                equipment: '',
-                description: '',
-            });
             navigate('/dashboard');
         } catch (error) {
             setMessage(error.response?.data?.message || 'An error occurred');
@@ -46,7 +63,7 @@ const AddRoom = () => {
     return (
         <Container maxWidth="sm">
             <Paper elevation={3} sx={{ padding: 3, marginTop: 5 }}>
-                <Typography variant="h4" gutterBottom>Add New Room</Typography>
+                <Typography variant="h4" gutterBottom>Edit Room</Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
                     <Button variant="outlined" color="secondary" onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
                 </Box>
@@ -98,7 +115,7 @@ const AddRoom = () => {
                         onChange={handleChange}
                     />
                     <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-                        <Button variant="contained" color="primary" type="submit">Add Room</Button>
+                        <Button variant="contained" color="primary" type="submit">Update Room</Button>
                     </Box>
                 </form>
                 {message && <Typography color="error" sx={{ marginTop: 2 }}>{message}</Typography>}
@@ -107,4 +124,4 @@ const AddRoom = () => {
     );
 };
 
-export default AddRoom;
+export default EditRoom;
