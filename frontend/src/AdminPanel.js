@@ -7,6 +7,14 @@ function AdminPanel({ navigate }) {
   const [minCapacity, setMinCapacity] = useState(30);
   const [maxCapacity, setMaxCapacity] = useState(250);
 
+  // Новые состояния для добавления помещения
+  const [roomType, setRoomType] = useState('Конференц-зал');
+  const [roomLocation, setRoomLocation] = useState('');
+  const [roomCapacity, setRoomCapacity] = useState('');
+  const [roomEquipment, setRoomEquipment] = useState('');
+  const [roomBuilding, setRoomBuilding] = useState('Главное здание');
+  const [roomDescription, setRoomDescription] = useState('');
+
   useEffect(() => {
     const handleScroll = () => {
       const elements = document.querySelectorAll('.text-dynamic');
@@ -71,6 +79,69 @@ function AdminPanel({ navigate }) {
             />
           </label>
           <button className="text-dynamic">Создать временной слот</button>
+
+          {/* Новый блок для добавления помещения */}
+          <h3 className="text-dynamic">Добавление помещения</h3>
+          <label className="text-dynamic">
+            Тип помещения:
+            <select
+              value={roomType}
+              onChange={(e) => setRoomType(e.target.value)}
+              className="dropdown"
+            >
+              <option value="Конференц-зал">Конференц-зал</option>
+              <option value="Кабинет">Кабинет</option>
+              <option value="Лаборатория">Лаборатория</option>
+              <option value="Библиотека">Библиотека</option>
+              <option value="Зона отдыха">Зона отдыха</option>
+            </select>
+          </label>
+          <label className="text-dynamic">
+            Расположение:
+            <input
+              type="text"
+              value={roomLocation}
+              onChange={(e) => setRoomLocation(e.target.value)}
+            />
+          </label>
+          <label className="text-dynamic">
+            Вместимость:
+            <input
+              type="number"
+              value={roomCapacity}
+              onChange={(e) => setRoomCapacity(e.target.value)}
+            />
+          </label>
+          <label className="text-dynamic">
+            Оборудование:
+            <input
+              type="text"
+              value={roomEquipment}
+              onChange={(e) => setRoomEquipment(e.target.value)}
+            />
+          </label>
+          <label className="text-dynamic">
+            Здание:
+            <select
+              value={roomBuilding}
+              onChange={(e) => setRoomBuilding(e.target.value)}
+              className="dropdown"
+            >
+              <option value="Главное здание">Главное здание</option>
+              <option value="Корпус А">Корпус А</option>
+              <option value="Корпус Б">Корпус Б</option>
+              <option value="Спортивный комплекс">Спортивный комплекс</option>
+              <option value="Библиотека">Библиотека</option>
+            </select>
+          </label>
+          <label className="text-dynamic">
+            Описание:
+            <textarea
+              value={roomDescription}
+              onChange={(e) => setRoomDescription(e.target.value)}
+            ></textarea>
+          </label>
+          <button className="text-dynamic">Добавить помещение</button>
         </div>
       </div>
       <div className="right-section">
