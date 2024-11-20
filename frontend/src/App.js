@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import './App.css';
+import MainPage from './MainPage';
+import AdminPanel from './AdminPanel';
+import UserAccount from './UserAccount';
 
 function App() {
-  const [message, setMessage] = useState('');
+  const [currentPage, setCurrentPage] = useState('main');
 
-  useEffect(() => {
-    fetch('/api')
-      .then(response => response.text())
-      .then(data => setMessage(data));
-  }, []);
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'main':
+        return <MainPage navigate={setCurrentPage} />;
+      case 'admin':
+        return <AdminPanel navigate={setCurrentPage} />;
+      case 'user':
+        return <UserAccount navigate={setCurrentPage} />;
+      default:
+        return <MainPage navigate={setCurrentPage} />;
+    }
+  };
 
-  return (
-    <div className="App">
-      <h1>{message}</h1>
-    </div>
-  );
+  return <div className="app">{renderPage()}</div>;
 }
 
 export default App;

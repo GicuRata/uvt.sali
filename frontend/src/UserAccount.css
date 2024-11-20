@@ -1,0 +1,64 @@
+.user-account {
+    display: flex;
+    height: 100vh;
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .left-section {
+    width: 50%;
+    padding: 2rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  
+  .right-section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+  
+  h2, h3, p {
+    font-family: 'Press Start 2P', cursive;
+    margin: 1rem 0;
+  }
+  
+  .booking-item {
+    border: 1px solid #fff;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .booking-item button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.5rem 1rem;
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .booking-item button:hover {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  .back-button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 1rem 2rem;
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .back-button:hover {
+    background-color: #fff;
+    color: #000;
+  }

@@ -1,0 +1,81 @@
+.main-page {
+  display: flex;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+}
+
+.left-section {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 5%;
+  box-sizing: border-box;
+}
+
+.right-section {
+  width: 50%;
+  background: url('./back1.png') no-repeat center center;
+  background-size: contain;
+  background-color: #000;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 2vw;
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+  max-width: 40vw;
+  font-size: 1rem;
+}
+
+.filters label input,
+.filters label select {
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #fff;
+  background: #000;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.filters button {
+  font-family: 'Press Start 2P', cursive;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.filters button:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.back-button {
+  font-family: 'Press Start 2P', cursive;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #fff;
+  color: #000;
+}
