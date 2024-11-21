@@ -65,7 +65,7 @@ const Dashboard = () => {
     return (
         <div className="container">
             <nav>
-                <img src="../../public/images/uvt-logo.jpeg" alt="Logo" />
+                <img src="/images/uvt-logo.jpeg" alt="Logo" />
                 <button onClick={logout}>Logout</button>
             </nav>
             <div className="profile">
@@ -76,7 +76,7 @@ const Dashboard = () => {
                     <p>User ID: {user.id}</p>
                     <p>Today: {new Date().toLocaleString("en-US")}</p>
                 </div>
-                <img src="../../public/images/logo.no.name.jpg" alt="Profile Logo" />
+                <img src="/images/logo.no.name.jpg" alt="Profile Logo" />
             </div>
             {/* Main Section */}
             <div className="main">
