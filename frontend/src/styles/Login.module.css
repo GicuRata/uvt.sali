@@ -107,3 +107,35 @@ input:-webkit-autofill:focus {
 input:-webkit-autofill::first-line {
     color: #fff !important; /* Ensures the first line of text matches your style */
 }
+
+/* Media Queries for Screens Smaller than 576px */
+@media (max-width: 576px) {
+    .login-container {
+        padding: 1rem;
+        max-width: 75%; /* Adjust container width to fit smaller screens */
+    }
+
+    .login-container h1 {
+        font-size: 1.5rem; /* Reduce heading size */
+        margin-bottom: 2rem;
+    }
+
+    .login-container label {
+        font-size: 0.9rem; /* Reduce label font size */
+    }
+
+    .login-container input {
+        padding: 0.6rem; /* Reduce input padding */
+        font-size: 0.8rem; /* Reduce input text size */
+    }
+
+    .button-container {
+        gap: 0.8rem; /* Reduce button spacing */
+    }
+
+    .login-button,
+    .register-button {
+        padding: 0.6rem; /* Reduce button padding */
+        font-size: 0.8rem; /* Reduce button font size */
+    }
+}

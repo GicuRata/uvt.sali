@@ -9,6 +9,7 @@
     background-color: #000; /* Dark background for contrast */
     color: #fff; /* White text for readability */
     font-family: 'Press Start 2P', cursive; /* Retro-inspired font */
+    padding: 1rem; /* Padding for smaller screens */
 }
 
 /* Paper-like Card */
@@ -123,4 +124,39 @@
     color: #dc3545; /* Red for error messages */
     font-weight: bold;
     font-size: 1rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 576px) {
+    .container {
+        padding: 0.5rem;
+        align-items: flex-start; /* Align content at the top */
+    }
+
+    .paper {
+        padding: 1.5rem;
+        max-width: 100%; /* Use full width */
+    }
+
+    .title {
+        font-size: 1.5rem; /* Smaller font size for titles */
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 0.6rem; /* Smaller padding for inputs */
+        font-size: 0.9rem; /* Smaller font size */
+    }
+
+    .back-button,
+    .submit-button {
+        padding: 0.6rem 1rem; /* Smaller padding for buttons */
+        font-size: 0.8rem; /* Smaller font size for buttons */
+    }
+
+    .back-button-container,
+    .submit-button-container {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 1rem; /* Add spacing between buttons */
+    }
 }

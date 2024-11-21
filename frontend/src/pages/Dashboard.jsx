@@ -76,7 +76,7 @@ const Dashboard = () => {
                     <p>User ID: {user.id}</p>
                     <p>Today: {new Date().toLocaleString("en-US")}</p>
                 </div>
-                <img src="../../public/images/uvt-logo.jpeg" alt="Profile Logo" />
+                <img src="../../public/images/logo.no.name.jpg" alt="Profile Logo" />
             </div>
             {/* Main Section */}
             <div className="main">
@@ -85,7 +85,7 @@ const Dashboard = () => {
                     <div className="admin-section">
                         <h2>Admin Section</h2>
                         <p>You have admin privileges. Manage rooms below:</p>
-                        <button className="add-room-btn" onClick={handleAdd}>
+                        <button className="shared-btn" onClick={handleAdd}>
                             Add Room
                         </button>
                     </div>
@@ -121,23 +121,23 @@ const Dashboard = () => {
                                 <li key={room._id} className="room-item">
                                     <h3>{room.name}</h3>
                                     <p>Location: {room.location}</p>
-                                    <p>Capacity:{room.capacity}</p>
+                                    <p>Capacity: {room.capacity}</p>
                                     {room.equipment.length > 0 && room.equipment[0] !== "" && (
-                                        <p>Equipment:{room.equipment.filter(e => e).join(", ")}</p>
+                                        <p>Equipment: {room.equipment.filter(e => e).join(", ")}</p>
                                     )}
                                     {room.description && (
-                                        <p>Description:{room.description}</p>
+                                        <p>Description: {room.description}</p>
                                     )}
                                     {user.role === "admin" && (
                                         <div className="room-actions">
                                             <button
-                                                className="edit-btn"
+                                                className="shared-btn edit-btn"
                                                 onClick={() => handleEdit(room._id)}
                                             >
                                                 Edit
                                             </button>
                                             <button
-                                                className="delete-btn"
+                                                className="shared-btn delete-btn"
                                                 onClick={() => handleDelete(room._id)}
                                             >
                                                 Delete

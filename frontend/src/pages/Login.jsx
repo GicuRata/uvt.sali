@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import AuthContext from '../context/auth.context';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Login.css';
+import styles from '../styles/Login.module.css';
 
 function Login() {
     const { login } = useContext(AuthContext);
@@ -19,15 +19,15 @@ function Login() {
     };
 
     return (
-        <div className="login-page">
-            <div className="login-container">
-                <h1 className="text-dynamic">Welcome!</h1>
+        <div className={styles.loginPage}>
+            <div className={styles.loginContainer}>
+                <h1 className={styles.textDynamic}>Welcome!</h1>
                 <form onSubmit={handleSubmit}>
-                    <label className="text-dynamic">
+                    <label className={styles.textDynamic}>
                         User ID or Email:
                         <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
                     </label>
-                    <label className="text-dynamic">
+                    <label className={styles.textDynamic}>
                         Password:
                         <input
                             type="password"
@@ -37,10 +37,10 @@ function Login() {
                             required
                         />
                     </label>
-                    <div className="button-container">
-                        <button className="login-button text-dynamic" type="submit">Login</button>
+                    <div className={styles.buttonContainer}>
+                        <button className={`${styles.loginButton} ${styles.textDynamic}`} type="submit">Login</button>
                         <button
-                            className="register-button text-dynamic"
+                            className={`${styles.registerButton} ${styles.textDynamic}`}
                             type="button"
                             onClick={() => navigate('/register')}
                         >

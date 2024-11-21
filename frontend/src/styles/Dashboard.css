@@ -113,33 +113,27 @@ nav button:hover {
 
 .add-room-btn {
     font-family: 'Press Start 2P', cursive;
-    padding: 0.8rem 1.5rem; /* Adjusted padding for a balanced size */
-    background-color: #28a745; /* Green background to indicate action */
+    padding: 0.8rem 1.5rem;
+    background-color: #28a745;
     color: #fff;
     border: none;
-    border-radius: 5px; /* Smooth rounded corners */
+    border-radius: 5px;
     cursor: pointer;
-    text-transform: uppercase; /* Makes the button text uppercase */
-    font-size: 0.9rem; /* Slightly smaller font size */
+    text-transform: uppercase;
+    font-size: 0.9rem;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .add-room-btn:hover {
-    background-color: #218838; /* Darker green for hover */
-    transform: scale(1.05); /* Slight scaling effect on hover */
+    background-color: #218838;
+    transform: scale(1.05);
 }
 
 .add-room-btn:active {
-    background-color: #1e7e34; /* Even darker green for active state */
-    transform: scale(0.98); /* Slight "press down" effect on click */
+    background-color: #1e7e34;
+    transform: scale(0.98);
 }
-
-.add-room-btn:focus {
-    outline: none; /* Remove default focus outline */
-    box-shadow: 0 0 8px rgba(40, 167, 69, 0.8); /* Add glowing green outline */
-}
-
 
 /* Info Section */
 .info-section {
@@ -222,26 +216,137 @@ nav button:hover {
     margin-top: 8px;
 }
 
+/* Shared Button Styles */
+.shared-btn {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.5rem;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.shared-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.shared-btn:active {
+    background-color: #1e7e34;
+    transform: scale(0.98);
+}
+
+/* Edit and Delete Buttons */
+/* Edit and Delete Buttons */
 .edit-btn,
 .delete-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    font-size: 0.9rem;
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.5rem 1rem; /* Smaller padding for smaller button size */
+    font-size: 0.8rem; /* Smaller font size */
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    border: none; /* No border for a cleaner look */
+}
+
+/* Edit Button Styles */
+.edit-btn {
+    background-color: #007bff;
+    color: #fff;
 }
 
 .edit-btn:hover {
     background-color: #0056b3;
+    transform: scale(1.03); /* Slight scaling effect on hover */
 }
 
+.edit-btn:active {
+    background-color: #004085;
+    transform: scale(0.98); /* Slight press effect */
+}
+
+/* Delete Button Styles */
 .delete-btn {
     background-color: #dc3545;
+    color: #fff;
 }
 
 .delete-btn:hover {
     background-color: #a71d2a;
+    transform: scale(1.03); /* Slight scaling effect on hover */
 }
+
+.delete-btn:active {
+    background-color: #721c24;
+    transform: scale(0.98); /* Slight press effect */
+}
+
+
+/* General Responsive Styles */
+@media (max-width: 1200px) {
+    .container {
+        width: 90%; /* Adjust container width for medium screens */
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+@media (max-width: 992px) {
+    .profile {
+        flex-direction: column; /* Stack profile info and image vertically */
+        align-items: center;
+    }
+
+    .profile img {
+        margin: 10px 0;
+        height: 200px;
+        width: 200px;
+    }
+
+    .user-info {
+        text-align: center; /* Center-align text for smaller screens */
+        padding-left: 0;
+    }
+
+    nav button {
+        padding: 0.6rem 1rem; /* Reduce button size for smaller screens */
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .info-section {
+        flex-direction: column; /* Stack bookings and available rooms vertically */
+        gap: 1rem;
+    }
+
+    .bookings,
+    .available-rooms {
+        width: 100%; /* Make both sections full-width */
+    }
+
+    .shared-style {
+        padding: 12px;
+    }
+
+    .shared-btn {
+        padding: 0.6rem 1.2rem; /* Reduce button size */
+        font-size: 0.8rem;
+    }
+
+    .edit-btn,
+    .delete-btn {
+        padding: 0.4rem 0.8rem; /* Smaller size for action buttons */
+        font-size: 0.7rem;
+    }
+}
+
+
+
