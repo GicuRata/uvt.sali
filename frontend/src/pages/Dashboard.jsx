@@ -94,39 +94,39 @@ const Dashboard = () => {
                 <div className="info-section">
                     {/* User Bookings */}
                     {user.role === "user" && (
-                        <div className="bookings">
+                        <div className="bookings shared-style">
                             <h2>Your Bookings:</h2>
                             {bookings.length > 0 ? (
                                 bookings.map((booking) => (
-                                    <div key={booking.id} className="booking-item text-dynamic">
-                                        <p>Дата: {booking.date}</p>
-                                        <p>Время: {booking.time}</p>
-                                        <p>Комната: {booking.room}</p>
+                                    <div key={booking.id} className="booking-item">
+                                        <p>Date: {booking.date}</p>
+                                        <p>Time: {booking.time}</p>
+                                        <p>Room: {booking.room}</p>
                                         <button onClick={() => handleCancelBooking(booking.id)}>
-                                            Отменить бронь
+                                            Cancel Booking
                                         </button>
                                     </div>
                                 ))
                             ) : (
-                                <p className="text-dynamic">Нет активных бронирований</p>
+                                <p className="text-dynamic">No active bookings</p>
                             )}
                         </div>
                     )}
                     {/* Available Rooms */}
-                    <div className="available-rooms paper">
-                        <h2>Rooms</h2>
+                    <div className="available-rooms shared-style">
+                        <h2>Available Rooms</h2>
                         {message && <p className="error-message">{message}</p>}
                         <ul className="room-list">
                             {rooms.map((room) => (
                                 <li key={room._id} className="room-item">
                                     <h3>{room.name}</h3>
-                                    <p><strong>Location:</strong> {room.location}</p>
-                                    <p><strong>Capacity:</strong> {room.capacity}</p>
+                                    <p>Location: {room.location}</p>
+                                    <p>Capacity:{room.capacity}</p>
                                     {room.equipment.length > 0 && room.equipment[0] !== "" && (
-                                        <p><strong>Equipment:</strong> {room.equipment.filter(e => e).join(", ")}</p>
+                                        <p>Equipment:{room.equipment.filter(e => e).join(", ")}</p>
                                     )}
                                     {room.description && (
-                                        <p><strong>Description:</strong> {room.description}</p>
+                                        <p>Description:{room.description}</p>
                                     )}
                                     {user.role === "admin" && (
                                         <div className="room-actions">

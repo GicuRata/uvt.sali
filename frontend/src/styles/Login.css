@@ -1,37 +1,109 @@
-/* Login.css */
-.login-container {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f0f2f5;
-    max-width: 400px;
-    margin: 0 auto;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    color: #fff;
 }
 
-.login-container form {
+.login-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    background-color: #111; /* Subtle contrast to differentiate from page background */
+    border: 1px solid #fff;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    text-align: center;
+    border-radius: 10px; /* Rounded corners for a modern look */
+}
+
+.login-container h1 {
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 4rem;
+    color: #fff;
+    font-size: 2rem;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.7); /* Add glow effect */
+}
+
+.login-container label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    font-family: 'Press Start 2P', cursive;
+    color: #fff;
 }
 
 .login-container input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
     width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    border: 1px solid #fff;
+    background: #000;
+    color: #fff;
+    font-size: 0.9rem;
+    border-radius: 5px; /* Smooth rounded corners */
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.login-container button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
+.login-container input:focus {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Glow effect on focus */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.login-button,
+.register-button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1rem;
+    width: 100%;
+    text-align: center;
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
     cursor: pointer;
-    margin-bottom: 10px;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    border-radius: 5px; /* Rounded corners for buttons */
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* Subtle button shadow */
 }
 
-.login-container button:hover {
-    background-color: #0056b3;
+.login-button:hover,
+.register-button:hover {
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3); /* Enhanced shadow on hover */
+}
+
+input:-webkit-autofill {
+    background-color: #000 !important; /* Match your input background color */
+    color: #fff !important; /* Match your input text color */
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 5000s ease-in-out 0s; /* Ensures autofill doesn't flash blue */
+}
+
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    color: #fff !important; /* Text color when hovered or focused */
+    background-color: #000 !important; /* Background color when hovered or focused */
+}
+
+input:-webkit-autofill::first-line {
+    color: #fff !important; /* Ensures the first line of text matches your style */
 }

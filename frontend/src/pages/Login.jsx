@@ -19,13 +19,36 @@ function Login() {
     };
 
     return (
-        <div className="login-container">
-            <form onSubmit={handleSubmit}>
-                <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
-                <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-                <button type="submit">Login</button>
-                <button type="button" onClick={() => navigate('/register')}>Go To Register</button>
-            </form>
+        <div className="login-page">
+            <div className="login-container">
+                <h1 className="text-dynamic">Welcome!</h1>
+                <form onSubmit={handleSubmit}>
+                    <label className="text-dynamic">
+                        User ID or Email:
+                        <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
+                    </label>
+                    <label className="text-dynamic">
+                        Password:
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <div className="button-container">
+                        <button className="login-button text-dynamic" type="submit">Login</button>
+                        <button
+                            className="register-button text-dynamic"
+                            type="button"
+                            onClick={() => navigate('/register')}
+                        >
+                            Go To Register
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }

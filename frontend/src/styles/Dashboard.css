@@ -2,10 +2,10 @@
 html, body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Ensure padding doesn't affect element size */
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
-    overflow-x: hidden; /* Prevent horizontal overflow if any */
+    overflow-x: hidden;
 }
 
 .container {
@@ -17,85 +17,151 @@ html, body {
     padding-right: 10%;
     min-height: 100vh;
 }
+
+/* Navigation */
 nav {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #fff;
 }
-nav img{
+
+nav img {
     height: 50px;
     width: 50px;
 }
 
-.profile{
-    display: flex;
-    padding-left: 5%;
-    padding-right: 5%;
+nav button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.5rem;
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 4px;
 }
-.profile img{
+
+nav button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+/* Profile Section */
+.profile {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+}
+
+.profile img {
     margin: 20px;
     height: 250px;
     width: 250px;
-}
-.main{
-    display: inline;
+    border-radius: 50%;
+    border: 3px solid #fff;
 }
 
-/**Admin**/
+.user-info {
+    width: 100%;
+    padding-left: 5%;
+}
+
+/* Main Section */
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Shared Styles for Sections */
+.shared-style {
+    padding: 16px;
+    margin-bottom: 16px;
+    background-color: #111;
+    border-radius: 8px;
+    box-shadow: 0px 3px 6px rgba(255, 255, 255, 0.16);
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Admin Section */
 .admin-section {
     margin-left: 20px;
     padding: 16px;
+    background-color: #111;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
 }
 
 .admin-section h2 {
     margin-bottom: 8px;
     font-size: 1.5rem;
     font-weight: bold;
+    color: #fff;
 }
 
 .admin-section p {
     margin-bottom: 16px;
     font-size: 1rem;
+    color: #aaa;
 }
 
 .add-room-btn {
-    background-color: #686868;
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.5rem; /* Adjusted padding for a balanced size */
+    background-color: #28a745; /* Green background to indicate action */
     color: #fff;
     border: none;
-    padding: 8px 16px;
-    font-size: 1rem;
-    border-radius: 4px;
+    border-radius: 5px; /* Smooth rounded corners */
     cursor: pointer;
-    transition: background-color 0.3s;
+    text-transform: uppercase; /* Makes the button text uppercase */
+    font-size: 0.9rem; /* Slightly smaller font size */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
 }
 
 .add-room-btn:hover {
-    background-color: #0056b3;
-}
-/**Admin**/
-
-.user-info {
-    width: 100%;
+    background-color: #218838; /* Darker green for hover */
+    transform: scale(1.05); /* Slight scaling effect on hover */
 }
 
+.add-room-btn:active {
+    background-color: #1e7e34; /* Even darker green for active state */
+    transform: scale(0.98); /* Slight "press down" effect on click */
+}
+
+.add-room-btn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.8); /* Add glowing green outline */
+}
+
+
+/* Info Section */
 .info-section {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 2rem;
+    gap: 2rem;
     width: 100%;
     box-sizing: border-box;
 }
+
+/* Bookings Section */
 .bookings {
     width: 40%;
 }
- /*Booking Items*/
+
 .booking-item {
     border: 1px solid #fff;
     padding: 1rem;
     margin-bottom: 1rem;
-
+    background-color: #111;
+    border-radius: 8px;
 }
 
 .booking-item p {
@@ -111,6 +177,7 @@ nav img{
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     margin-top: 0.5rem;
+    border-radius: 4px;
 }
 
 .booking-item button:hover {
@@ -118,30 +185,12 @@ nav img{
     color: #000;
 }
 
-.available-rooms{
+/* Available Rooms Section */
+.available-rooms {
     width: 40%;
 }
 
-/* Paper Style for Available Rooms */
-.paper {
-    padding: 16px;
-    margin-bottom: 16px;
-    border-radius: 8px;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
-}
-
-.paper h2 {
-    margin-bottom: 16px;
-    font-size: 1.5rem;
-}
-
-.error-message {
-    color: red;
-    font-weight: bold;
-    margin-bottom: 16px;
-}
-
-/* Room List */
+/* Room List & Items */
 .room-list {
     list-style: none;
     padding: 0;
@@ -149,19 +198,21 @@ nav img{
 }
 
 .room-item {
-    padding: 16px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
+    border: 1px solid #fff;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #111;
+    border-radius: 8px;
 }
 
 .room-item h3 {
     margin: 0 0 8px;
     font-size: 1.2rem;
+    color: #fff;
 }
 
 .room-item p {
-    margin: 4px 0;
-    font-size: 1rem;
+    margin: 0.5rem 0;
 }
 
 /* Room Actions */
@@ -194,4 +245,3 @@ nav img{
 .delete-btn:hover {
     background-color: #a71d2a;
 }
-
