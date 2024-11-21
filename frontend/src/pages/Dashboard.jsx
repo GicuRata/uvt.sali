@@ -1,122 +1,156 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import AuthContext from '../context/auth.context';
-import { Add, Edit, Delete } from '@mui/icons-material';
-import { AppBar, Toolbar, Button, Container, Typography, List, ListItem, ListItemText, IconButton, Paper, Box } from '@mui/material';
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import AuthContext from "../context/auth.context"; // Adjust the import path as per your project structure
+import "../styles/Dashboard.css";
 
 const Dashboard = () => {
     const { user, logout } = useContext(AuthContext);
     const [rooms, setRooms] = useState([]);
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRooms = async () => {
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem("token");
                 const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/rooms/get-rooms`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: { Authorization: `Bearer ${token}` },
                 });
                 setRooms(response.data.rooms);
             } catch (error) {
-                console.error('Failed to fetch rooms:', error);
-                setMessage('Failed to fetch rooms');
+                console.error("Failed to fetch rooms:", error);
+                setMessage("Failed to load rooms");
             }
         };
 
         fetchRooms();
     }, []);
 
+    const handleDelete = async (roomId) => {
+        if (window.confirm("Are you sure you want to delete this room?")) {
+            try {
+                const token = localStorage.getItem("token");
+                await axios.delete(`${import.meta.env.VITE_API_URL}/api/rooms/delete-room/${roomId}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setRooms(rooms.filter((room) => room._id !== roomId));
+            } catch (error) {
+                console.error("Failed to delete room:", error);
+                setMessage("Failed to delete the room");
+            }
+        }
+    };
+
     const handleAdd = () => {
-        navigate('/admin/add-room');
+        navigate("/admin/add-room");
     };
 
     const handleEdit = (roomId) => {
         navigate(`/admin/edit-room/${roomId}`);
     };
 
-    const handleDelete = async (roomId) => {
-        if (window.confirm('Are you sure you want to delete this room?')) {
-            try {
-                const token = localStorage.getItem('token');
-                await axios.delete(`${import.meta.env.VITE_API_URL}/api/rooms/delete-room/${roomId}`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                setRooms(rooms.filter(room => room._id !== roomId));
-            } catch (error) {
-                console.error('Failed to delete room:', error);
-                setMessage('Failed to delete room');
-            }
-        }
+    /**
+     * Demo booking
+     * **/
+    const [bookings, setBookings] = useState([
+        { id: 1, date: "2024-02-10", time: "14:00-16:00", room: "Conference Hall" },
+        { id: 2, date: "2024-02-15", time: "10:00-12:00", room: "Workshop Room" },
+    ]);
+
+    const handleCancelBooking = (id) => {
+        setBookings((prev) => prev.filter((booking) => booking.id !== id));
     };
 
     return (
-        <Container>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6" style={{ flexGrow: 1 }}>
-                        Welcome, {user.username}
-                    </Typography>
-                    <Button color="inherit" onClick={logout}>Logout</Button>
-                </Toolbar>
-            </AppBar>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                {user.role === 'admin' && (
-                    <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-                        <Typography variant="h4">Admin Section</Typography>
-                        <Typography variant="body1">You have admin privileges. Manage rooms below:</Typography>
-                        <Button variant="contained" color="primary" startIcon={<Add />} onClick={handleAdd}>
+        <div className="container">
+            <nav>
+                <img src="../../public/images/uvt-logo.jpeg" alt="Logo" />
+                <button onClick={logout}>Logout</button>
+            </nav>
+            <div className="profile">
+                <div className="user-info">
+                    <h1>Personal Dashboard</h1>
+                    <p>Name: {user.username}</p>
+                    <p>Status: {user.role}</p> {/* Replace with user role */}
+                    <p>User ID: {user.id}</p>
+                    <p>Today: {new Date().toLocaleString("en-US")}</p>
+                </div>
+                <img src="../../public/images/uvt-logo.jpeg" alt="Profile Logo" />
+            </div>
+            {/* Main Section */}
+            <div className="main">
+                {/* Admin Section */}
+                {user.role === "admin" && (
+                    <div className="admin-section">
+                        <h2>Admin Section</h2>
+                        <p>You have admin privileges. Manage rooms below:</p>
+                        <button className="add-room-btn" onClick={handleAdd}>
                             Add Room
-                        </Button>
-                    </Paper>
+                        </button>
+                    </div>
                 )}
-                <Paper elevation={3} sx={{ padding: 2 }}>
-                    <Typography variant="h4">Rooms</Typography>
-                    {message && <Typography variant="body1" color="error">{message}</Typography>}
-                    <List>
-                        {rooms.map((room) => (
-                            <ListItem key={room._id} divider>
-                                <ListItemText
-                                    primary={room.name}
-                                    secondary={
-                                        <>
-                                            <Typography component="span" variant="body2" color="textPrimary">
-                                                Location: {room.location}
-                                            </Typography>
-                                            <br />
-                                            Capacity: {room.capacity}
-                                            {room.equipment.length > 0 && room.equipment[0] !== "" && (
-                                                <>
-                                                    <br />
-                                                    Equipment: {room.equipment.filter(e => e).join(', ')}
-                                                </>
-                                            )}
-                                            {room.description && (
-                                                <>
-                                                    <br />
-                                                    Description: {room.description}
-                                                </>
-                                            )}
-                                        </>
-                                    }
-                                />
-                                {user.role === 'admin' && (
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <IconButton edge="end" aria-label="edit" onClick={() => handleEdit(room._id)}>
-                                            <Edit />
-                                        </IconButton>
-                                        <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(room._id)}>
-                                            <Delete />
-                                        </IconButton>
-                                    </Box>
-                                )}
-                            </ListItem>
-                        ))}
-                    </List>
-                </Paper>
-            </Box>
-        </Container>
+
+                <div className="info-section">
+                    {/* User Bookings */}
+                    {user.role === "user" && (
+                        <div className="bookings">
+                            <h2>Your Bookings:</h2>
+                            {bookings.length > 0 ? (
+                                bookings.map((booking) => (
+                                    <div key={booking.id} className="booking-item text-dynamic">
+                                        <p>Дата: {booking.date}</p>
+                                        <p>Время: {booking.time}</p>
+                                        <p>Комната: {booking.room}</p>
+                                        <button onClick={() => handleCancelBooking(booking.id)}>
+                                            Отменить бронь
+                                        </button>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-dynamic">Нет активных бронирований</p>
+                            )}
+                        </div>
+                    )}
+                    {/* Available Rooms */}
+                    <div className="available-rooms paper">
+                        <h2>Rooms</h2>
+                        {message && <p className="error-message">{message}</p>}
+                        <ul className="room-list">
+                            {rooms.map((room) => (
+                                <li key={room._id} className="room-item">
+                                    <h3>{room.name}</h3>
+                                    <p><strong>Location:</strong> {room.location}</p>
+                                    <p><strong>Capacity:</strong> {room.capacity}</p>
+                                    {room.equipment.length > 0 && room.equipment[0] !== "" && (
+                                        <p><strong>Equipment:</strong> {room.equipment.filter(e => e).join(", ")}</p>
+                                    )}
+                                    {room.description && (
+                                        <p><strong>Description:</strong> {room.description}</p>
+                                    )}
+                                    {user.role === "admin" && (
+                                        <div className="room-actions">
+                                            <button
+                                                className="edit-btn"
+                                                onClick={() => handleEdit(room._id)}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="delete-btn"
+                                                onClick={() => handleDelete(room._id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
