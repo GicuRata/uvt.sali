@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* General Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000; /* Dark background for contrast */
+    color: #fff; /* White text for readability */
+    font-family: 'Press Start 2P', cursive; /* Retro-inspired font */
+}
+
+/* Paper-like Card */
+.paper {
+    width: 100%;
+    max-width: 600px; /* Restrict card width */
+    background-color: #111; /* Slightly lighter black for differentiation */
+    border: 1px solid #fff; /* White border for separation */
+    border-radius: 10px; /* Rounded edges */
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); /* Soft shadow */
+    padding: 2rem; /* Padding inside the card */
+    text-align: center; /* Center-align text */
+}
+
+/* Title */
+.title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Glow effect */
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left; /* Align labels and inputs to the left */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #fff;
+    background-color: #000;
+    color: #fff;
+    border-radius: 5px; /* Smooth rounded corners */
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Glow effect */
+}
+
+/* Back Button Container */
+.back-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.back-button {
+    padding: 0.8rem 1.5rem;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    color: #fff;
+    background: none;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+/* Submit Button */
+.submit-button-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.submit-button {
+    padding: 0.8rem 1.5rem;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+.submit-button:active {
+    background-color: #003d80;
+    transform: scale(0.95); /* Slight press effect */
+}
+
+/* Error Message */
+.error-message {
+    margin-top: 1rem;
+    color: #dc3545; /* Red for error messages */
+    font-weight: bold;
+    font-size: 1rem;
+}

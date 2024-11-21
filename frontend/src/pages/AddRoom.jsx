@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Container, TextField, Button, Typography, Box, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import styles from '../styles/AddRoom.module.css';
 
 const AddRoom = () => {
     const [formData, setFormData] = useState({
@@ -24,10 +24,14 @@ const AddRoom = () => {
             const token = localStorage.getItem('token');
             const config = { headers: { Authorization: `Bearer ${token}` } };
 
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/rooms/add-room`, {
-                ...formData,
-                equipment: formData.equipment.split(',').map((item) => item.trim()),
-            }, config);
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/rooms/add-room`,
+                {
+                    ...formData,
+                    equipment: formData.equipment.split(',').map((item) => item.trim()),
+                },
+                config
+            );
 
             setMessage(response.data.message);
             setFormData({
@@ -44,66 +48,82 @@ const AddRoom = () => {
     };
 
     return (
-        <Container maxWidth="sm">
-            <Paper elevation={3} sx={{ padding: 3, marginTop: 5 }}>
-                <Typography variant="h4" gutterBottom>Add New Room</Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-                    <Button variant="outlined" color="secondary" onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
-                </Box>
+        <div className={styles.container}>
+            <div className={styles.paper}>
+                <h2 className={styles.title}>Add New Room</h2>
+                <div className={styles.backButtonContainer}>
+                    <button
+                        className={styles.backButton}
+                        onClick={() => navigate('/dashboard')}
+                    >
+                        Back to Dashboard
+                    </button>
+                </div>
                 <form onSubmit={handleSubmit}>
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Room Name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Location"
-                        name="location"
-                        value={formData.location}
-                        onChange={handleChange}
-                        required
-                    />
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Capacity"
-                        name="capacity"
-                        type="number"
-                        value={formData.capacity}
-                        onChange={handleChange}
-                        required
-                    />
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Equipment (comma-separated)"
-                        name="equipment"
-                        value={formData.equipment}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Description"
-                        name="description"
-                        multiline
-                        rows={4}
-                        value={formData.description}
-                        onChange={handleChange}
-                    />
-                    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-                        <Button variant="contained" color="primary" type="submit">Add Room</Button>
-                    </Box>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="name">Room Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter room name"
+                            required
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="location">Location:</label>
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            placeholder="Enter location"
+                            required
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="capacity">Capacity:</label>
+                        <input
+                            type="number"
+                            id="capacity"
+                            name="capacity"
+                            placeholder="Enter capacity"
+                            required
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="equipment">Equipment (comma-separated):</label>
+                        <input
+                            type="text"
+                            id="equipment"
+                            name="equipment"
+                            placeholder="Enter equipment"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="description">Description:</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="4"
+                            placeholder="Enter description"
+                            onChange={handleChange}
+                        ></textarea>
+                    </div>
+                    <div className={styles.submitButtonContainer}>
+                        <button className={styles.submitButton} type="submit">
+                            Add Room
+                        </button>
+                    </div>
                 </form>
-                {message && <Typography color="error" sx={{ marginTop: 2 }}>{message}</Typography>}
-            </Paper>
-        </Container>
+                <p className={styles.errorMessage} id="errorMessage">
+                    {message}
+                </p>
+            </div>
+        </div>
     );
 };
 
