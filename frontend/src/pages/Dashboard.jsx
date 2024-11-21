@@ -117,35 +117,39 @@ const Dashboard = () => {
                         <h2>Available Rooms</h2>
                         {message && <p className="error-message">{message}</p>}
                         <ul className="room-list">
-                            {rooms.map((room) => (
-                                <li key={room._id} className="room-item">
-                                    <h3>{room.name}</h3>
-                                    <p>Location: {room.location}</p>
-                                    <p>Capacity: {room.capacity}</p>
-                                    {room.equipment.length > 0 && room.equipment[0] !== "" && (
-                                        <p>Equipment: {room.equipment.filter(e => e).join(", ")}</p>
-                                    )}
-                                    {room.description && (
-                                        <p>Description: {room.description}</p>
-                                    )}
-                                    {user.role === "admin" && (
-                                        <div className="room-actions">
-                                            <button
-                                                className="shared-btn edit-btn"
-                                                onClick={() => handleEdit(room._id)}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="shared-btn delete-btn"
-                                                onClick={() => handleDelete(room._id)}
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    )}
-                                </li>
-                            ))}
+                            {rooms && rooms.length > 0 ? (
+                                rooms.map((room) => (
+                                    <li key={room._id} className="room-item">
+                                        <h3>{room.name}</h3>
+                                        <p>Location: {room.location}</p>
+                                        <p>Capacity: {room.capacity}</p>
+                                        {room.equipment.length > 0 && room.equipment[0] !== "" && (
+                                            <p>Equipment: {room.equipment.filter(e => e).join(", ")}</p>
+                                        )}
+                                        {room.description && (
+                                            <p>Description: {room.description}</p>
+                                        )}
+                                        {user.role === "admin" && (
+                                            <div className="room-actions">
+                                                <button
+                                                    className="shared-btn edit-btn"
+                                                    onClick={() => handleEdit(room._id)}
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className="shared-btn delete-btn"
+                                                    onClick={() => handleDelete(room._id)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        )}
+                                    </li>
+                                ))
+                            ) : (
+                                <p>No rooms available</p>
+                            )}
                         </ul>
                     </div>
                 </div>

@@ -1,7 +1,11 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import dotenv from 'dotenv';
 
-// https://vite.dev/config/
+// Load environment variables from the parent directory
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
 export default defineConfig({
   plugins: [react()],
   css: {
@@ -9,4 +13,7 @@ export default defineConfig({
       localsConvention: 'camelCaseOnly', // Optional, ensures camelCase class names
     },
   },
-})
+  define: {
+    'process.env': process.env
+  }
+});
