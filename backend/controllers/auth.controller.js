@@ -2,6 +2,45 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 
+
+const validateToken = (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).json({ message: "No token provided" });
+    }
+
+    const token = authHeader.split(" ")[1];
+    if (!token) {
+        return res.status(401).json({ message: "No token provided" });
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ message: "Invalid or expired token" });
+        }
+
+        try {
+            // Optional: fetch user from DB to be sure it still exists
+            const user = await User.findById(decoded.id).select("username email role");
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
+            // Return some user info
+            return res.json({
+                id: user._id,
+                username: user.username,
+                role: user.role,
+            });
+        } catch (error) {
+            console.error("validateToken error:", error);
+            return res.status(500).json({ message: "Server error" });
+        }
+    });
+};
+
+
+
 // Create admin account
 const createAdmin = async (req, res) => {
     const { username, email, password, adminSecret } = req.body;
@@ -91,4 +130,4 @@ const login = async (req, res) => {
 
 
 
-module.exports = { register, login, createAdmin };
+module.exports = { register, login, createAdmin, validateToken };

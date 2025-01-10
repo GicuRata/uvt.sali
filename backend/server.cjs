@@ -6,6 +6,7 @@ const { fileURLToPath } = require('url');
 const connectDB = require('./config/db.js');
 const authRoute = require('./routes/auth.routes.js');
 const roomRoute = require('./routes/room.routes.js');
+const bookingRoute = require('./routes/booking.routes.js');
 
 // Load environment variables from the parent directory
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
@@ -23,6 +24,7 @@ const PORT = process.env.PORT || 6900;
 // Use routes
 app.use('/api/auth', authRoute);
 app.use('/api/rooms', roomRoute);
+app.use('/api/bookings', bookingRoute);
 
 
 // Serve static files in production

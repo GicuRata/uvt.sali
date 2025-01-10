@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AuthContext from "../context/auth.context"; // Adjust the import path as per your project structure
+import AuthContext from "../context/auth.context";
 import "../styles/Dashboard.css";
 
 const Dashboard = () => {
@@ -11,12 +11,14 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Load rooms, etc.
         const fetchRooms = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/rooms/get-rooms`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/api/rooms/get-rooms`,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
                 setRooms(response.data.rooms);
             } catch (error) {
                 console.error("Failed to fetch rooms:", error);
@@ -27,39 +29,16 @@ const Dashboard = () => {
         fetchRooms();
     }, []);
 
-    const handleDelete = async (roomId) => {
-        if (window.confirm("Are you sure you want to delete this room?")) {
-            try {
-                const token = localStorage.getItem("token");
-                await axios.delete(`${import.meta.env.VITE_API_URL}/api/rooms/delete-room/${roomId}`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                setRooms(rooms.filter((room) => room._id !== roomId));
-            } catch (error) {
-                console.error("Failed to delete room:", error);
-                setMessage("Failed to delete the room");
-            }
-        }
+    const handleGoToBookRoom = () => {
+        navigate("/book-room");
     };
 
-    const handleAdd = () => {
-        navigate("/admin/add-room");
+    const handleGoToMyBookings = () => {
+        navigate("/my-bookings");
     };
 
-    const handleEdit = (roomId) => {
-        navigate(`/admin/edit-room/${roomId}`);
-    };
-
-    /**
-     * Demo booking
-     * **/
-    const [bookings, setBookings] = useState([
-        { id: 1, date: "2024-02-10", time: "14:00-16:00", room: "Conference Hall" },
-        { id: 2, date: "2024-02-15", time: "10:00-12:00", room: "Workshop Room" },
-    ]);
-
-    const handleCancelBooking = (id) => {
-        setBookings((prev) => prev.filter((booking) => booking.id !== id));
+    const handleGoToAdminBookings = () => {
+        navigate("/admin/bookings");
     };
 
     return (
@@ -68,51 +47,42 @@ const Dashboard = () => {
                 <img src="/images/uvt-logo.jpeg" alt="Logo" />
                 <button onClick={logout}>Logout</button>
             </nav>
+
             <div className="profile">
                 <div className="user-info">
                     <h1>Personal Dashboard</h1>
                     <p>Name: {user.username}</p>
-                    <p>Status: {user.role}</p> {/* Replace with user role */}
+                    <p>Status: {user.role}</p>
                     <p>User ID: {user.id}</p>
                     <p>Today: {new Date().toLocaleString("en-US")}</p>
                 </div>
                 <img src="/images/logo.no.name.jpg" alt="Profile Logo" />
             </div>
-            {/* Main Section */}
+
             <div className="main">
-                {/* Admin Section */}
+                {/* Admin Only */}
                 {user.role === "admin" && (
                     <div className="admin-section">
                         <h2>Admin Section</h2>
-                        <p>You have admin privileges. Manage rooms below:</p>
-                        <button className="shared-btn" onClick={handleAdd}>
-                            Add Room
-                        </button>
+                        <button onClick={() => navigate("/admin/add-room")}>Add Room</button>
+                        {/* Link to all bookings (admin) */}
+                        <button onClick={handleGoToAdminBookings}>Manage Bookings</button>
+                    </div>
+                )}
+
+                {/* Bookings for normal user */}
+                {user.role === "user" && (
+                    <div className="user-section">
+                        <h2>User Bookings</h2>
+                        {/* Navigate to Book Room */}
+                        <button onClick={handleGoToBookRoom}>Book a Room</button>
+                        {/* Navigate to My Bookings */}
+                        <button onClick={handleGoToMyBookings}>My Bookings</button>
                     </div>
                 )}
 
                 <div className="info-section">
-                    {/* User Bookings */}
-                    {user.role === "user" && (
-                        <div className="bookings shared-style">
-                            <h2>Your Bookings:</h2>
-                            {bookings.length > 0 ? (
-                                bookings.map((booking) => (
-                                    <div key={booking.id} className="booking-item">
-                                        <p>Date: {booking.date}</p>
-                                        <p>Time: {booking.time}</p>
-                                        <p>Room: {booking.room}</p>
-                                        <button onClick={() => handleCancelBooking(booking.id)}>
-                                            Cancel Booking
-                                        </button>
-                                    </div>
-                                ))
-                            ) : (
-                                <p className="text-dynamic">No active bookings</p>
-                            )}
-                        </div>
-                    )}
-                    {/* Available Rooms */}
+                    {/* Existing code for rooms listing */}
                     <div className="available-rooms shared-style">
                         <h2>Available Rooms</h2>
                         {message && <p className="error-message">{message}</p>}
@@ -124,7 +94,9 @@ const Dashboard = () => {
                                         <p>Location: {room.location}</p>
                                         <p>Capacity: {room.capacity}</p>
                                         {room.equipment.length > 0 && room.equipment[0] !== "" && (
-                                            <p>Equipment: {room.equipment.filter(e => e).join(", ")}</p>
+                                            <p>
+                                                Equipment: {room.equipment.filter((e) => e).join(", ")}
+                                            </p>
                                         )}
                                         {room.description && (
                                             <p>Description: {room.description}</p>
@@ -133,13 +105,30 @@ const Dashboard = () => {
                                             <div className="room-actions">
                                                 <button
                                                     className="shared-btn edit-btn"
-                                                    onClick={() => handleEdit(room._id)}
+                                                    onClick={() => navigate(`/admin/edit-room/${room._id}`)}
                                                 >
                                                     Edit
                                                 </button>
                                                 <button
                                                     className="shared-btn delete-btn"
-                                                    onClick={() => handleDelete(room._id)}
+                                                    onClick={async () => {
+                                                        if (window.confirm("Confirm delete?")) {
+                                                            try {
+                                                                const token = localStorage.getItem("token");
+                                                                await axios.delete(
+                                                                    `${import.meta.env.VITE_API_URL}/api/rooms/delete-room/${room._id}`,
+                                                                    {
+                                                                        headers: { Authorization: `Bearer ${token}` },
+                                                                    }
+                                                                );
+                                                                setRooms((prev) =>
+                                                                    prev.filter((r) => r._id !== room._id)
+                                                                );
+                                                            } catch (error) {
+                                                                setMessage("Failed to delete room");
+                                                            }
+                                                        }
+                                                    }}
                                                 >
                                                     Delete
                                                 </button>

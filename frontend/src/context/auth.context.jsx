@@ -9,17 +9,16 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (userData) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, userData);
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/auth/login`,
+                userData
+            );
             const token = response.data.token;
 
             localStorage.setItem('token', token);
 
-            const userDataFromToken = JSON.parse(atob(token.split('.')[1])); // Decode token payload
-            setUser({
-                id: userDataFromToken.id,
-                username: userDataFromToken.username,
-                role: userDataFromToken.role,
-            });
+            // Optionally: validate the token right away
+            await validateTokenOnServer(token);
         } catch (error) {
             console.error("Login error:", error.response?.data?.message || error.message);
         }
@@ -27,7 +26,10 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, userData);
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/auth/register`,
+                userData
+            );
             return response.data; // Return the response for success indication
         } catch (error) {
             console.error("Registration error:", error.response?.data.message || error.message);
@@ -35,28 +37,46 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-
     const logout = () => {
         localStorage.removeItem('token');
         setUser(null);
     };
 
+    // New function to validate token with the server
+    const validateTokenOnServer = async (token) => {
+        try {
+            // Make a request to /api/auth/validate
+            const res = await axios.get(
+                `${import.meta.env.VITE_API_URL}/api/auth/validate`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            // If valid, set user data from response
+            setUser({
+                id: res.data.id,
+                username: res.data.username,
+                role: res.data.role,
+            });
+        } catch (error) {
+            console.error("Token validation error:", error.response?.data || error.message);
+            // If invalid, remove it
+            localStorage.removeItem('token');
+            setUser(null);
+        }
+    };
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            // Decode the token to get user data if it's a JWT
-            const userData = JSON.parse(atob(token.split('.')[1])); // Decode the token payload
-            setUser({
-                id: userData.id,
-                username: userData.username,
-                role: userData.role,
+            // Validate with the server
+            validateTokenOnServer(token).finally(() => {
+                setLoading(false);
             });
-            // console.log('User loaded from token:', decodedToken); // Debug log
-
+        } else {
+            setLoading(false);
         }
-        setLoading(false);
     }, []);
-
 
     return (
         <AuthContext.Provider value={{ user, login, register, logout, loading }}>
@@ -64,6 +84,5 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
 
 export default AuthContext;
