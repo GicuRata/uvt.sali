@@ -162,7 +162,7 @@ const Dashboard = () => {
     };
 
     const handleGenerateQr = () => {
-        setQrValue(`${window.location.origin}/guest-booking-room`);
+        setQrValue(`${window.location.origin}/guest-book-room`);
     };
 
     return (
