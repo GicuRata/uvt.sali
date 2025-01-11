@@ -11,6 +11,8 @@ import AdminProtectedRoute from './components/AdminRoute';
 import BookRoom from './pages/BookRoom';
 import MyBookings from './pages/MyBookings';
 import AdminBookings from './pages/AdminBookings';
+import GuestBookRoom from './pages/GuestBookRoom';
+import AdminGuestBookings from './pages/AdminGuestBookings';
 
 function App() {
   return (
@@ -55,6 +57,14 @@ function App() {
         <Route
           path="/my-bookings"
           element={<ProtectedRoute><MyBookings /></ProtectedRoute>}
+        />
+        <Route
+          path="/guest-book-room"
+          element={<GuestBookRoom />}
+        />
+        <Route
+          path="/admin/guest-bookings"
+          element={<AdminProtectedRoute><AdminGuestBookings /></AdminProtectedRoute>}
         />
       </Routes>
     </Router>

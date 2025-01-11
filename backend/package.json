@@ -21,6 +21,7 @@
     "jwt-decode": "^4.0.0",
     "mongoose": "^8.8.1",
     "my-fullstack-app": "file:..",
+    "nodemailer": "^6.9.16",
     "nodemon": "^3.1.7"
   }
 }

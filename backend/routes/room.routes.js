@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/add-room', authenticateToken('admin'), addRoom);
 
-router.get('/get-rooms', authenticateToken(), getRooms);
+router.get('/get-rooms', getRooms);
 
 router.delete('/delete-room/:id', authenticateToken('admin'), deleteRoom);
 
