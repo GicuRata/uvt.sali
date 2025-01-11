@@ -7,7 +7,7 @@ const connectDB = require('./config/db.js');
 const authRoute = require('./routes/auth.routes.js');
 const roomRoute = require('./routes/room.routes.js');
 const bookingRoute = require('./routes/booking.routes.js');
-const guestBookingRoute = require('./routes/guestBooking.routes.js');
+const guestBookingRoute = require('./routes/guestbooking.routes.js');
 
 // Load environment variables from the parent directory
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
