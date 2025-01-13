@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "../styles/MyBooking.module.css";
 
 const MyBookings = () => {
     const [bookings, setBookings] = useState([]);
     const [message, setMessage] = useState("");
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBookings = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await axios.get(
+                let res = await axios.get(
                     `${import.meta.env.VITE_API_URL}/api/bookings/my-bookings`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
                 );
-                setBookings(res.data.bookings || []);
+                const order = { approved: 1, pending: 2, denied: 3 };
+                const sorted = (res.data.bookings || []).sort(
+                    (a, b) => order[a.status] - order[b.status]
+                );
+                setBookings(sorted);
             } catch (error) {
                 console.error("Failed to fetch user bookings:", error);
             }
@@ -71,12 +75,7 @@ const MyBookings = () => {
                     </div>
                 ))
             )}
-
-            {/* Back Button */}
-            <button
-                className={styles.backButton}
-                onClick={() => navigate(-1)} // Navigate to the previous page
-            >
+            <button className={styles.backButton} onClick={() => navigate(-1)}>
                 Back
             </button>
         </div>

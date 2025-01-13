@@ -1,5 +1,25 @@
 const Booking = require("../models/booking.model");
 const Room = require("../models/room.model");
+const nodemailer = require("nodemailer");
+const dotenv = require('dotenv');
+const path = require('path');
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+});
+
+function sendEmail(to, subject, text) {
+    transporter.sendMail({ from: process.env.EMAIL_USER, to, subject, text }, (err) => {
+        if (err) console.error("Email sending error:", err);
+    });
+}
+
+
 
 // Helper: checks if two time spans overlap
 // (startA < endB) AND (endA > startB)
@@ -192,6 +212,29 @@ async function cancelBooking(req, res) {
     }
 }
 
+async function adminCancelBooking(req, res) {
+    try {
+        const { id } = req.params;
+        const booking = await Booking.findById(id).populate("user").populate("room");
+        if (!booking) {
+            return res.status(404).json({ message: "Booking not found" });
+        }
+
+        sendEmail(
+            booking.user.email,
+            "Booking Canceled",
+            `Hello, your booking for room ${booking.room.name} has been canceled by an admin.`
+        );
+
+        booking.status = "denied";
+        await booking.save();
+        return res.status(200).json({ message: "Booking canceled" });
+    } catch (error) {
+        console.error("adminCancelBooking error:", error);
+        return res.status(500).json({ message: "Failed to cancel booking" });
+    }
+}
+
 module.exports = {
     getAvailableRooms,
     createBooking,
@@ -200,4 +243,5 @@ module.exports = {
     approveBooking,
     denyBooking,
     cancelBooking,
+    adminCancelBooking,
 };

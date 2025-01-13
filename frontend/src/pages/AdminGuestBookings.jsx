@@ -45,6 +45,9 @@ const AdminGuestBookings = () => {
     };
 
     const handleDeny = async (id) => {
+        if (!window.confirm("Are you sure you want to deny this booking?")) {
+            return;
+        }
         setMessage("");
         try {
             const token = localStorage.getItem("token");
@@ -61,6 +64,28 @@ const AdminGuestBookings = () => {
         } catch (error) {
             console.error("Deny error:", error);
             setMessage("Failed to deny booking");
+        }
+    };
+
+    const handleCancel = async (id) => {
+        if (!window.confirm("Are you sure you want to cancel this booking?")) {
+            return;
+        }
+        setMessage("");
+        try {
+            const token = localStorage.getItem("token");
+            const res = await axios.delete(
+                `${import.meta.env.VITE_API_URL}/api/guest-bookings/admin-cancel/${id}`,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            const updated = res.data.guestBooking;
+            setGuestBookings((prev) =>
+                prev.map((b) => (b._id === id ? { ...b, status: updated.status } : b))
+            );
+            setMessage("Guest booking canceled");
+        } catch (error) {
+            console.error("Cancel error:", error);
+            setMessage("Failed to cancel booking");
         }
     };
 
@@ -84,7 +109,7 @@ const AdminGuestBookings = () => {
                     sortedGuestBookings.map((b) => (
                         <li key={b._id} className={styles.bookingCard}>
                             <p className={styles.bookingDetails}>
-                                <strong>Full Name:</strong> {b.fullName} <br/>
+                                <strong>Full Name:</strong> {b.fullName} <br />
                                 <strong>Email:</strong> {b.email}
                             </p>
                             <p className={styles.bookingDetails}>
@@ -116,6 +141,14 @@ const AdminGuestBookings = () => {
                                         Deny
                                     </button>
                                 </div>
+                            )}
+                            {(b.status === "approved" || b.status === "pending") && (
+                                <button
+                                    className={styles.button}
+                                    onClick={() => handleCancel(b._id)}
+                                >
+                                    Cancel
+                                </button>
                             )}
                         </li>
                     ))

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import styles from "../styles/AdminBookings.module.css";
 
 const AdminBookings = () => {
     const [bookings, setBookings] = useState([]);
     const [message, setMessage] = useState("");
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -14,9 +14,7 @@ const AdminBookings = () => {
                 const token = localStorage.getItem("token");
                 const res = await axios.get(
                     `${import.meta.env.VITE_API_URL}/api/bookings/all-bookings`,
-                    {
-                        headers: { Authorization: `Bearer ${token}` },
-                    }
+                    { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setBookings(res.data.bookings || []);
             } catch (error) {
@@ -47,6 +45,7 @@ const AdminBookings = () => {
     };
 
     const handleDeny = async (id) => {
+        if (!window.confirm("Are you sure you want to deny this booking?")) return;
         setMessage("");
         try {
             const token = localStorage.getItem("token");
@@ -66,7 +65,23 @@ const AdminBookings = () => {
         }
     };
 
-    // Sort bookings to show pending bookings first
+    const handleCancel = async (id) => {
+        if (!window.confirm("Are you sure you want to cancel this booking?")) return;
+        setMessage("");
+        try {
+            const token = localStorage.getItem("token");
+            await axios.delete(
+                `${import.meta.env.VITE_API_URL}/api/bookings/admin-cancel/${id}`,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            setBookings((prev) => prev.filter((b) => b._id !== id));
+            setMessage("Booking canceled successfully");
+        } catch (error) {
+            console.error("Cancel error:", error);
+            setMessage("Failed to cancel booking");
+        }
+    };
+
     const sortedBookings = bookings.sort((a, b) => {
         const statusOrder = { pending: 1, approved: 2, denied: 3 };
         return statusOrder[a.status] - statusOrder[b.status];
@@ -103,22 +118,29 @@ const AdminBookings = () => {
                             >
                                 Status: {b.status}
                             </p>
-                            {b.status === "pending" && (
-                                <div className={styles.buttonGroup}>
+                            <div className={styles.buttonGroup}>
+                                {b.status === "pending" && (
+                                    <>
+                                        <button className={styles.approveButton} onClick={() => handleApprove(b._id)}>
+                                            Approve
+                                        </button>
+                                        <button
+                                            className={`${styles.button} ${styles.denyButton}`}
+                                            onClick={() => handleDeny(b._id)}
+                                        >
+                                            Deny
+                                        </button>
+                                    </>
+                                )}
+                                {b.status === "approved" && (
                                     <button
-                                        className={styles.approveButton}
-                                        onClick={() => handleApprove(b._id)}
+                                        className={`${styles.button} ${styles.cancelButton}`}
+                                        onClick={() => handleCancel(b._id)}
                                     >
-                                        Approve
+                                        Cancel
                                     </button>
-                                    <button
-                                        className={`${styles.button} ${styles.denyButton}`}
-                                        onClick={() => handleDeny(b._id)}
-                                    >
-                                        Deny
-                                    </button>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </li>
                     ))
                 )}

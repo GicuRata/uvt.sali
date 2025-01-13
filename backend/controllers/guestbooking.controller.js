@@ -202,6 +202,33 @@ exports.approveGuestBooking = async (req, res) => {
     }
 };
 
+exports.cancelGuestBooking = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const guestBooking = await GuestBooking.findById(id).populate("room");
+        if (!guestBooking) {
+            return res.status(404).json({ message: "Guest booking not found" });
+        }
+
+        guestBooking.status = "denied";
+        await guestBooking.save();
+
+        sendEmail(
+            guestBooking.email,
+            "Booking Canceled",
+            `Hello ${guestBooking.fullName},\n\nYour booking for ${guestBooking.room.name} has been canceled by an admin.\n`
+        );
+
+        return res.status(200).json({
+            message: "Guest booking canceled",
+            guestBooking,
+        });
+    } catch (error) {
+        console.error("cancelGuestBooking error:", error);
+        return res.status(500).json({ message: "Failed to cancel guest booking" });
+    }
+};
+
 // Admin: deny a guest booking
 exports.denyGuestBooking = async (req, res) => {
     try {

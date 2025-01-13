@@ -5,6 +5,7 @@ const {
     getAllGuestBookings,
     approveGuestBooking,
     denyGuestBooking,
+    cancelGuestBooking,
 } = require("../controllers/guestbooking.controller");
 const authenticateToken = require("../middleware/auth.middleware");
 
@@ -15,5 +16,6 @@ router.post("/create", createGuestBooking);
 router.get("/all", authenticateToken("admin"), getAllGuestBookings);
 router.patch("/approve/:id", authenticateToken("admin"), approveGuestBooking);
 router.patch("/deny/:id", authenticateToken("admin"), denyGuestBooking);
+router.delete("/admin-cancel/:id", authenticateToken("admin"), cancelGuestBooking);
 
 module.exports = router;
