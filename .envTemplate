@@ -1,0 +1,7 @@
+VITE_API_URL=http://localhost:6900
+MONGO_URI=mongo_connection_uri_here
+PORT=6900
+JWT_SECRET=write_some_long_text_here_you_can_even_leave_this_one_if_your_a_lazy_
+ADMIN_SECRET=your-strong-secret-key
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-pass(app-pass-preferably)
