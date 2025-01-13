@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import styles from "../styles/MyBooking.module.css";
 
 const MyBookings = () => {
     const [bookings, setBookings] = useState([]);
     const [message, setMessage] = useState("");
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -69,6 +71,14 @@ const MyBookings = () => {
                     </div>
                 ))
             )}
+
+            {/* Back Button */}
+            <button
+                className={styles.backButton}
+                onClick={() => navigate(-1)} // Navigate to the previous page
+            >
+                Back
+            </button>
         </div>
     );
 };

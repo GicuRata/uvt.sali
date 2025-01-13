@@ -12,25 +12,37 @@ function Register() {
         confirmPassword: '',
     });
     const [showPassword, setShowPassword] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(''); // State for error message
     const navigate = useNavigate();
 
-    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setErrorMessage(''); // Clear error message on input change
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match!");
+            setErrorMessage("Passwords do not match!");
             return;
         }
-        const response = await register(formData);
-        if (response) {
-            navigate('/login'); // Redirect to login page on successful registration
+
+        try {
+            const response = await register(formData);
+            if (response) {
+                navigate('/login'); // Redirect to login page on successful registration
+            }
+        } catch (error) {
+            setErrorMessage(error.message || "Failed to register. Please try again."); // Set error message
         }
     };
 
     return (
         <div className={styles.registerPage}>
+            {errorMessage && (
+                <p className={styles.errorMessage}>{errorMessage}</p> // Display error message
+            )}
             <div className={styles.registerContainer}>
                 <form onSubmit={handleSubmit}>
                     <h2 className={styles.textDynamic}>Registration</h2>

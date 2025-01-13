@@ -9,15 +9,38 @@ export default function BookRoom() {
     const [endTime, setEndTime] = useState("");
     const [availableRooms, setAvailableRooms] = useState([]);
     const [selectedRoom, setSelectedRoom] = useState("");
+    const [selectedRoomDetails, setSelectedRoomDetails] = useState(null); // To store details of the clicked room
     const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false); // Loader state
     const navigate = useNavigate();
+
+    // Helper to get current date and time
+    const getCurrentDate = () => new Date().toISOString().split("T")[0];
+    const getCurrentTime = () => {
+        const now = new Date();
+        return now.toTimeString().slice(0, 5); // "HH:mm"
+    };
 
     const handleCheckAvailability = async (e) => {
         e.preventDefault();
         setMessage("");
+        setAvailableRooms([]);
+        setLoading(true);
+
         try {
+            const currentDate = getCurrentDate();
+            const currentTime = getCurrentTime();
+
+            // Check if the selected date and time are valid
+            if (date < currentDate || (date === currentDate && startTime < currentTime)) {
+                setMessage("Cannot select a time or date in the past.");
+                setLoading(false);
+                return;
+            }
+
             if (startTime >= endTime) {
                 setMessage("Start time must be less than end time.");
+                setLoading(false);
                 return;
             }
 
@@ -29,6 +52,7 @@ export default function BookRoom() {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
+
             setAvailableRooms(res.data.rooms);
             if (res.data.rooms.length === 0) {
                 setMessage("No rooms available for this time slot.");
@@ -36,6 +60,8 @@ export default function BookRoom() {
         } catch (err) {
             console.error("Check availability error:", err);
             setMessage("Failed to check availability.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -45,6 +71,7 @@ export default function BookRoom() {
             setMessage("Please select a room first.");
             return;
         }
+        setLoading(true);
         try {
             const token = localStorage.getItem("token");
             await axios.post(
@@ -57,17 +84,28 @@ export default function BookRoom() {
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            setMessage("Booking request created (status: pending).");
+            setMessage("Booking request created successfully (status: pending).");
+            setAvailableRooms([]);
+            setSelectedRoom("");
+            setSelectedRoomDetails(null);
         } catch (error) {
             console.error("Booking error:", error);
             setMessage(error.response?.data?.message || "Failed to create booking.");
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const handleRoomClick = (room) => {
+        setSelectedRoom(room._id);
+        setSelectedRoomDetails(room);
     };
 
     return (
         <div className={styles.containerBookroom}>
             <h2>Book a Room</h2>
             {message && <p id="message" className={styles.messageBookroom}>{message}</p>}
+            {loading && <div className={styles.spinner}>Loading...</div>}
 
             <form onSubmit={handleCheckAvailability} className={styles.sharedStyleBookroom}>
                 <div>
@@ -75,6 +113,7 @@ export default function BookRoom() {
                     <input
                         type="date"
                         value={date}
+                        min={getCurrentDate()} // Prevent past dates
                         onChange={(e) => setDate(e.target.value)}
                         className={styles.inputBookroom}
                         required
@@ -86,6 +125,7 @@ export default function BookRoom() {
                     <input
                         type="time"
                         value={startTime}
+                        min={date === getCurrentDate() ? getCurrentTime() : undefined} // Prevent past times for today
                         onChange={(e) => setStartTime(e.target.value)}
                         className={styles.inputBookroom}
                         required
@@ -97,6 +137,7 @@ export default function BookRoom() {
                     <input
                         type="time"
                         value={endTime}
+                        min={startTime || undefined} // Prevent times earlier than startTime
                         onChange={(e) => setEndTime(e.target.value)}
                         className={styles.inputBookroom}
                         required
@@ -113,24 +154,56 @@ export default function BookRoom() {
                     <h3>Select an available room</h3>
                     <ul>
                         {availableRooms.map((room) => (
-                            <li key={room._id} className={styles.roomItemBookroom}>
+                            <li
+                                key={room._id}
+                                className={styles.roomItemBookroom}
+                                onClick={() => handleRoomClick(room)} // Set the clicked room's details
+                            >
                                 <label>
                                     <input
                                         type="radio"
                                         name="selectedRoom"
                                         value={room._id}
-                                        onChange={(e) => setSelectedRoom(e.target.value)}
+                                        checked={selectedRoom === room._id}
+                                        readOnly
                                     />
                                     {room.name} ({room.location}, capacity: {room.capacity})
+
+                                    {selectedRoomDetails?._id === room._id && (
+                                        <div className={styles.roomDetailsBookroom}>
+                                            <p>Details:</p>
+                                            <p>Location: {room.location}</p>
+                                            <p>Capacity: {room.capacity}</p>
+                                            {room.equipment?.length > 0 && room.equipment[0] !== "" && (
+                                                <p>
+                                                    Equipment: {room.equipment.filter((e) => e).join(", ")}
+                                                </p>
+                                            )}
+                                            {room.description && <p>Description: {room.description}</p>}
+                                        </div>
+                                    )}
                                 </label>
                             </li>
                         ))}
                     </ul>
-                    <button onClick={handleBooking} className={styles.sharedBtnBookroom}>
+
+                    <button
+                        onClick={handleBooking}
+                        className={styles.sharedBtnBookroom}
+                        disabled={!selectedRoom} // Disable booking if no room is selected
+                    >
                         Book Selected Room
                     </button>
                 </div>
             )}
+
+            {/* Back Button */}
+            <button
+                className={styles.backBtnBookroom}
+                onClick={() => navigate(-1)} // Navigate to the previous page
+            >
+                Back
+            </button>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 /* Page Container */
 .register-page {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -64,7 +65,19 @@
     border-color: #fff;
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Glow effect */
 }
-
+.errorMessage {
+    color: #ff4d4d; /* Bright red for error */
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    font-size: 1rem; /* Adjust font size for visibility */
+    margin-bottom: 1rem; /* Space between the error and the login container */
+    padding: 1rem;
+    background-color: rgba(255, 0, 0, 0.1); /* Subtle background for better visibility */
+    border: 1px solid #ff4d4d;
+    border-radius: 5px; /* Smooth corners */
+    max-width: 400px; /* Match the width of the login container */
+    margin: 0 auto; /* Center align */
+}
 /* Button Container */
 .button-container {
     display: flex;
@@ -73,6 +86,7 @@
     gap: 1rem;
     margin-top: 1rem;
 }
+
 
 /* Buttons */
 .register-container button {
