@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styles from "../styles/BookRoom.module.css";
 
 export default function BookRoom() {
     const [date, setDate] = useState("");
@@ -15,7 +16,6 @@ export default function BookRoom() {
         e.preventDefault();
         setMessage("");
         try {
-            // Basic time check on frontend
             if (startTime >= endTime) {
                 setMessage("Start time must be less than end time.");
                 return;
@@ -31,7 +31,7 @@ export default function BookRoom() {
             );
             setAvailableRooms(res.data.rooms);
             if (res.data.rooms.length === 0) {
-                setMessage("No rooms available for this time slot (based on approved bookings).");
+                setMessage("No rooms available for this time slot.");
             }
         } catch (err) {
             console.error("Check availability error:", err);
@@ -58,8 +58,6 @@ export default function BookRoom() {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setMessage("Booking request created (status: pending).");
-            // Optionally redirect or reset
-            // navigate("/my-bookings");
         } catch (error) {
             console.error("Booking error:", error);
             setMessage(error.response?.data?.message || "Failed to create booking.");
@@ -67,50 +65,55 @@ export default function BookRoom() {
     };
 
     return (
-        <div style={{ padding: "2rem" }}>
+        <div className={styles.containerBookroom}>
             <h2>Book a Room</h2>
-            {message && <p>{message}</p>}
+            {message && <p id="message" className={styles.messageBookroom}>{message}</p>}
 
-            <form onSubmit={handleCheckAvailability}>
+            <form onSubmit={handleCheckAvailability} className={styles.sharedStyleBookroom}>
                 <div>
-                    <label>Date: </label>
+                    <label>Date:</label>
                     <input
                         type="date"
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
+                        className={styles.inputBookroom}
                         required
                     />
                 </div>
 
                 <div>
-                    <label>Start Time (HH:mm): </label>
+                    <label>Start Time (HH:mm):</label>
                     <input
                         type="time"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
+                        className={styles.inputBookroom}
                         required
                     />
                 </div>
 
                 <div>
-                    <label>End Time (HH:mm): </label>
+                    <label>End Time (HH:mm):</label>
                     <input
                         type="time"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
+                        className={styles.inputBookroom}
                         required
                     />
                 </div>
 
-                <button type="submit">Check Availability</button>
+                <button type="submit" className={styles.sharedBtnBookroom}>
+                    Check Availability
+                </button>
             </form>
 
             {availableRooms.length > 0 && (
-                <>
+                <div className={styles.availableRoomsBookroom}>
                     <h3>Select an available room</h3>
                     <ul>
                         {availableRooms.map((room) => (
-                            <li key={room._id}>
+                            <li key={room._id} className={styles.roomItemBookroom}>
                                 <label>
                                     <input
                                         type="radio"
@@ -123,8 +126,10 @@ export default function BookRoom() {
                             </li>
                         ))}
                     </ul>
-                    <button onClick={handleBooking}>Book Selected Room</button>
-                </>
+                    <button onClick={handleBooking} className={styles.sharedBtnBookroom}>
+                        Book Selected Room
+                    </button>
+                </div>
             )}
         </div>
     );

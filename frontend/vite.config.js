@@ -11,6 +11,7 @@ export default defineConfig({
   css: {
     modules: {
       localsConvention: 'camelCaseOnly', // Optional, ensures camelCase class names
+      scopeBehaviour: 'local', // Ensures all styles are scoped locally
     },
   },
   define: {

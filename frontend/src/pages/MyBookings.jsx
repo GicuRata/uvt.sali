@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import styles from "../styles/MyBooking.module.css";
 
 const MyBookings = () => {
     const [bookings, setBookings] = useState([]);
@@ -42,28 +43,29 @@ const MyBookings = () => {
     };
 
     return (
-        <div style={{ padding: "2rem" }}>
-            <h2>My Bookings</h2>
-            {message && <p>{message}</p>}
+        <div className={styles.container}>
+            <h2 className={styles.title}>My Bookings</h2>
+            {message && <p className={styles.message}>{message}</p>}
             {bookings.length === 0 ? (
-                <p>No bookings found.</p>
+                <p className={styles.noBookings}>No bookings found.</p>
             ) : (
                 bookings.map((b) => (
-                    <div
-                        key={b._id}
-                        style={{ border: "1px solid #ccc", padding: "1rem", margin: "1rem 0" }}
-                    >
-                        <p>
+                    <div key={b._id} className={styles.bookingCard}>
+                        <p className={styles.bookingDetails}>
                             Room: {b.room?.name} | Location: {b.room?.location}
                         </p>
-                        <p>
+                        <p className={styles.bookingDetails}>
                             Date: {b.date?.slice(0, 10)} | Time: {b.startTime} - {b.endTime}
                         </p>
-                        <p>Status: {b.status}</p>
-                        {/* Cancel button (only if not already denied/approved, or allow cancel anyway) */}
-                        {b.status === "pending" || b.status === "approved" ? (
-                            <button onClick={() => cancelBooking(b._id)}>Cancel Booking</button>
-                        ) : null}
+                        <p className={styles.bookingDetails}>Status: {b.status}</p>
+                        {(b.status === "pending" || b.status === "approved") && (
+                            <button
+                                className={styles.cancelButton}
+                                onClick={() => cancelBooking(b._id)}
+                            >
+                                Cancel Booking
+                            </button>
+                        )}
                     </div>
                 ))
             )}
