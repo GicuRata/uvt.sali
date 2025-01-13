@@ -10,8 +10,8 @@ const bookingRoute = require('./routes/booking.routes.js');
 const guestBookingRoute = require('./routes/guestbooking.routes.js');
 
 // Load environment variables from the parent directory
-dotenv.config();
-// dotenv.config({ path: path.resolve(__dirname, '../.env') });
+// dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 app.use(cors({ origin: "*" }));
