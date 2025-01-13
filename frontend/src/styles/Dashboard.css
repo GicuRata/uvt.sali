@@ -111,9 +111,10 @@ nav button:hover {
     color: #aaa;
 }
 
-.add-room-btn {
+.admin-btn {
     font-family: 'Press Start 2P', cursive;
     padding: 0.8rem 1.5rem;
+    margin: 10px;
     background-color: #28a745;
     color: #fff;
     border: none;
@@ -125,14 +126,85 @@ nav button:hover {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-.add-room-btn:hover {
+.admin-btn:hover {
     background-color: #218838;
     transform: scale(1.05);
 }
 
-.add-room-btn:active {
+.admin-btn:active {
     background-color: #1e7e34;
     transform: scale(0.98);
+}
+
+/* User Section */
+.user-section {
+    margin-left: 20px;
+    padding: 16px;
+    background-color: #111;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.user-section h2 {
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.user-section p {
+    margin-bottom: 16px;
+    font-size: 1rem;
+    color: #aaa;
+}
+
+.user-btn {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.5rem;
+    margin: 10px;
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 4px;
+}
+
+.user-btn:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.user-btn:active {
+    background-color: #1e7e34;
+    transform: scale(0.98);
+}
+
+/* Generate Button Style */
+.generate-button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.4rem;
+    margin: 10px;
+    background-color: #ffc107; /* Yellow color */
+    color: #000; /* Black text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.generate-button:hover {
+    background-color: #e0a800; /* Darker yellow */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+.generate-button:active {
+    background-color: #c69500; /* Even darker yellow */
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Info Section */
@@ -145,43 +217,11 @@ nav button:hover {
     box-sizing: border-box;
 }
 
-/* Bookings Section */
-.bookings {
-    width: 40%;
-}
-
-.booking-item {
-    border: 1px solid #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    background-color: #111;
-    border-radius: 8px;
-}
-
-.booking-item p {
-    margin: 0.5rem 0;
-}
-
-.booking-item button {
-    font-family: 'Press Start 2P', cursive;
-    padding: 0.5rem 1rem;
-    background: none;
-    border: 1px solid #fff;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    margin-top: 0.5rem;
-    border-radius: 4px;
-}
-
-.booking-item button:hover {
-    background-color: #fff;
-    color: #000;
-}
 
 /* Available Rooms Section */
 .available-rooms {
-    width: 40%;
+    align-items: center;
+    width: 50%;
 }
 
 /* Room List & Items */
@@ -347,6 +387,3 @@ nav button:hover {
         font-size: 0.7rem;
     }
 }
-
-
-

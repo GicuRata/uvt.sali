@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import AuthContext from '../context/auth.context';
-import '../styles/Register.css';
+import styles from '../styles/Register.module.css';
 
 function Register() {
     const { register } = useContext(AuthContext);
@@ -30,11 +30,11 @@ function Register() {
     };
 
     return (
-        <div className="register-page">
-            <div className="register-container">
+        <div className={styles.registerPage}>
+            <div className={styles.registerContainer}>
                 <form onSubmit={handleSubmit}>
-                    <h2 className="text-dynamic">Registration</h2>
-                    <label className="text-dynamic">
+                    <h2 className={styles.textDynamic}>Registration</h2>
+                    <label className={styles.textDynamic}>
                         Username:
                         <input
                             type="text"
@@ -44,7 +44,7 @@ function Register() {
                             onChange={handleChange}
                         />
                     </label>
-                    <label className="text-dynamic">
+                    <label className={styles.textDynamic}>
                         Email:
                         <input
                             type="email"
@@ -54,17 +54,17 @@ function Register() {
                             onChange={handleChange}
                         />
                     </label>
-                    <label className="text-dynamic">
+                    <label className={styles.textDynamic}>
                         Password:
                         <input
-                            type={showPassword ? 'text' : 'password'} // Toggle password visibility
+                            type={showPassword ? 'text' : 'password'}
                             name="password"
                             placeholder="Password"
                             value={formData.password}
                             onChange={handleChange}
                         />
                     </label>
-                    <label className="text-dynamic">
+                    <label className={styles.textDynamic}>
                         Confirm Password:
                         <input
                             type={showPassword ? 'text' : 'password'}
@@ -74,7 +74,7 @@ function Register() {
                             onChange={handleChange}
                         />
                     </label>
-                    <div className="button-container">
+                    <div className={styles.buttonContainer}>
                         <button type="button" onClick={() => setShowPassword(!showPassword)}>
                             {showPassword ? 'Hide Passwords' : 'Show Passwords'}
                         </button>
