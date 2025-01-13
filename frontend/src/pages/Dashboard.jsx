@@ -18,6 +18,8 @@ const Dashboard = () => {
     const [guestStartTime, setGuestStartTime] = useState("");
     const [guestEndTime, setGuestEndTime] = useState("");
     const [guestRoomId, setGuestRoomId] = useState("");
+    const [nextBooking, setNextBooking] = useState(null);
+
 
     const [qrValue, setQrValue] = useState("");
     const [showQr, setShowQr] = useState(false); // State to manage QR visibility
@@ -36,7 +38,29 @@ const Dashboard = () => {
                 setMessage("Failed to load rooms");
             }
         };
+        const fetchNextBooking = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/api/bookings/my-bookings`,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+                if (res.data.bookings && res.data.bookings.length > 0) {
+                    const acceptedBooking = res.data.bookings.find(
+                        (b) => b.status === "approved"
+                    );
+                    if (acceptedBooking) {
+                        setNextBooking(acceptedBooking);
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
         fetchRooms();
+        if (user && user.role === "user") {
+            fetchNextBooking();
+        }
     }, []);
 
     const handleGuestBooking = async (e) => {
@@ -190,14 +214,14 @@ const Dashboard = () => {
                         <button onClick={() => navigate("/admin/add-room")} className="admin-btn">Add Room</button>
                         <button onClick={handleGoToAdminBookings} className="admin-btn">Manage Bookings</button>
                         <button onClick={() => navigate("/admin/guest-bookings")} className="admin-btn">Manage Guest Bookings</button>
-                        <div style={{marginTop: "1rem"}}>
+                        <div style={{ marginTop: "1rem" }}>
                             <button onClick={handleGenerateQr} className="generate-button">Generate QR for Guest
                                 Booking
                             </button>
                             {showQr && qrValue && (
-                                <div style={{marginTop: "1rem"}}>
+                                <div style={{ marginTop: "1rem" }}>
                                     <div>
-                                        <QRCode value={qrValue}/>
+                                        <QRCode value={qrValue} />
                                     </div>
                                     <button onClick={() => setShowQr(false)} className="generate-button">
                                         Hide QR
@@ -210,13 +234,23 @@ const Dashboard = () => {
                         </div>
                     </div>
                 )}
+                {user.role === "user" && nextBooking && (
+                    <div style={{ marginTop: "1rem" }}>
+                        <h2>Your Next Booking</h2>
+                        <p>Room: {nextBooking.room?.name}</p>
+                        <p>Date: {nextBooking.date?.slice(0, 10)}</p>
+                        <p>Time: {nextBooking.startTime} - {nextBooking.endTime}</p>
+                        <p>Status: {nextBooking.status}</p>
+                    </div>
+                )}
                 {user.role === "user" && (
                     <div className="user-section">
-                    <h2>User Bookings</h2>
+                        <h2>User Bookings</h2>
                         <button onClick={handleGoToBookRoom} className="user-btn">Book a Room</button>
                         <button onClick={handleGoToMyBookings} className="user-btn">My Bookings</button>
                     </div>
                 )}
+
                 <div className="info-section">
                     <div className="available-rooms shared-style">
                         <h2>Available Rooms</h2>

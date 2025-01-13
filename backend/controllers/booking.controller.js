@@ -89,7 +89,12 @@ async function createBooking(req, res) {
 async function getUserBookings(req, res) {
     try {
         const userId = req.user.id;
-        const bookings = await Booking.find({ user: userId })
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const bookings = await Booking.find({
+            user: userId,
+            date: { $gte: today },
+        })
             .populate("room", "name location")
             .sort({ date: 1 });
         return res.status(200).json({ bookings });
@@ -101,13 +106,19 @@ async function getUserBookings(req, res) {
 
 async function getAllBookings(req, res) {
     try {
-        const bookings = await Booking.find()
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const bookings = await Booking.find({
+            date: { $gte: today },
+        })
             .populate("user", "username email")
-            .populate("room", "name location");
+            .populate("room", "name location")
+            .sort({ date: 1 });
+
         return res.status(200).json({ bookings });
     } catch (error) {
         console.error("getAllBookings error:", error);
-        return res.status(500).json({ message: "Failed to fetch all bookings" });
+        return res.status(500).json({ message: "Failed to get all bookings" });
     }
 }
 

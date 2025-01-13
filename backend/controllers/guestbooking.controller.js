@@ -123,7 +123,9 @@ exports.createGuestBooking = async (req, res) => {
 // Admin: get all guest bookings
 exports.getAllGuestBookings = async (req, res) => {
     try {
-        const guestBookings = await GuestBooking.find()
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const guestBookings = await GuestBooking.find({ date: { $gte: today }, })
             .populate("room", "name location")
             .sort({ createdAt: -1 });
         return res.status(200).json({ guestBookings });
