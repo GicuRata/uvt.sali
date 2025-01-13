@@ -1,43 +1,55 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-/* General Container */
+/* General Styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
+    background-color: #000;
+    color: #fff;
+    height: 100%;
+    overflow-x: hidden;
+}
+
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #000; /* Dark background for contrast */
-    color: #fff; /* White text for readability */
-    font-family: 'Press Start 2P', cursive; /* Retro-inspired font */
-    padding: 1rem; /* Padding for smaller screens */
+    min-height: 100vh;
+    padding: 1rem;
+    background: radial-gradient(circle, #111 60%, #000 100%);
 }
 
 /* Paper-like Card */
 .paper {
     width: 100%;
-    max-width: 600px; /* Restrict card width */
-    background-color: #111; /* Slightly lighter black for differentiation */
-    border: 1px solid #fff; /* White border for separation */
-    border-radius: 10px; /* Rounded edges */
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); /* Soft shadow */
-    padding: 2rem; /* Padding inside the card */
-    text-align: center; /* Center-align text */
+    max-width: 600px;
+    background: linear-gradient(145deg, #1c1c1c, #000);
+    border: 2px solid #fff;
+    border-radius: 15px;
+    box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.2);
+    padding: 2.5rem;
+    text-align: center;
 }
 
 /* Title */
 .title {
     font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: #fff;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Glow effect */
+    color: #007bff; /* Blue Title */
+    text-shadow: 0 0 10px #007bff, 0 0 20px #0056b3;
+    margin-bottom: 2rem;
 }
 
 /* Form Groups */
 .form-group {
     margin-bottom: 1.5rem;
-    text-align: left; /* Align labels and inputs to the left */
-}
 
+}
+.inputTitle {
+    text-align: left !important;
+    margin-left: 8%;
+}
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
@@ -47,116 +59,116 @@
 
 .form-group input,
 .form-group textarea {
-    width: 100%;
-    padding: 0.8rem;
+    width: 80%;
+    padding: 0.9rem;
     border: 1px solid #fff;
     background-color: #000;
     color: #fff;
-    border-radius: 5px; /* Smooth rounded corners */
+    border-radius: 8px;
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: all 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #fff;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Glow effect */
+    border-color: #007bff; /* Blue Focus Border */
+    box-shadow: 0 0 10px #007bff, 0 0 20px #0056b3;
 }
 
-/* Back Button Container */
-.back-button-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-}
-
-.back-button {
-    padding: 0.8rem 1.5rem;
+/* Buttons */
+button {
     font-family: 'Press Start 2P', cursive;
     font-size: 0.9rem;
-    color: #fff;
-    background: none;
-    border: 1px solid #fff;
-    border-radius: 5px;
+    padding: 0.8rem 1.5rem;
+    border: 2px solid #fff;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
 }
 
-.back-button:hover {
+/* Back Button */
+.backButton {
+    margin: 20px;
+    background: none;
+    color: #fff;
+}
+
+.backButton:hover {
     background-color: #fff;
     color: #000;
+    transform: scale(1.05);
+}
+
+.backButton:active {
+    background-color: #ccc;
+    transform: scale(0.95);
 }
 
 /* Submit Button */
-.submit-button-container {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-}
-
-.submit-button {
-    padding: 0.8rem 1.5rem;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.9rem;
-    background-color: #007bff;
+.submitButton {
+    background-color: #007bff; /* Blue Submit Button */
     color: #fff;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 1.5rem;
 }
 
-.submit-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05); /* Slight zoom effect */
+.submitButton:hover {
+    background-color: #0056b3; /* Darker Blue on Hover */
+    box-shadow: 0 0 10px #0056b3, 0 0 20px #007bff;
+    transform: scale(1.05);
 }
 
-.submit-button:active {
-    background-color: #003d80;
-    transform: scale(0.95); /* Slight press effect */
+.submitButton:active {
+    background-color: #003d80; /* Even Darker Blue on Click */
+    transform: scale(0.95);
 }
 
 /* Error Message */
-.error-message {
+.errorMessage {
     margin-top: 1rem;
     color: #dc3545; /* Red for error messages */
     font-weight: bold;
     font-size: 1rem;
 }
 
-/* Responsive Styles */
-@media (max-width: 576px) {
-    .container {
-        padding: 0.5rem;
-        align-items: flex-start; /* Align content at the top */
-    }
-
+/* Responsive Design */
+@media (max-width: 768px) {
     .paper {
-        padding: 1.5rem;
-        max-width: 100%; /* Use full width */
+        padding: 2rem;
+        border-radius: 10px;
     }
 
     .title {
-        font-size: 1.5rem; /* Smaller font size for titles */
+        font-size: 1.5rem;
     }
 
     .form-group input,
     .form-group textarea {
-        padding: 0.6rem; /* Smaller padding for inputs */
-        font-size: 0.9rem; /* Smaller font size */
+        padding: 0.8rem;
+        font-size: 0.9rem;
     }
 
-    .back-button,
-    .submit-button {
-        padding: 0.6rem 1rem; /* Smaller padding for buttons */
-        font-size: 0.8rem; /* Smaller font size for buttons */
+    button {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        align-items: flex-start;
+        padding: 1rem;
     }
 
-    .back-button-container,
-    .submit-button-container {
-        flex-direction: column; /* Stack buttons vertically */
-        gap: 1rem; /* Add spacing between buttons */
+    .paper {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+
+    .title {
+        font-size: 1.3rem;
     }
 }

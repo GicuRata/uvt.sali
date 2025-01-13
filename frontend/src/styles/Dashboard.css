@@ -6,12 +6,12 @@ html, body {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
+    background-color: #000; /* Dark background for the entire app */
+    color: #fff; /* White text for readability */
+    font-family: 'Press Start 2P', cursive;
 }
 
 .container {
-    background-color: #000;
-    color: #fff;
-    font-family: 'Press Start 2P', cursive;
     width: 80%;
     padding-left: 10%;
     padding-right: 10%;
@@ -69,6 +69,11 @@ nav button:hover {
     padding-left: 5%;
 }
 
+.user-info p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
 /* Main Section */
 .main {
     display: flex;
@@ -86,6 +91,47 @@ nav button:hover {
     color: #fff;
     width: 100%;
     box-sizing: border-box;
+}
+
+/* Next Booking Section */
+.next-booking {
+    padding: 1.5rem;
+    margin-left: 20px;
+    background-color: #222;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    background-color: #111;
+    margin-top: 20px;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.next-booking h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #00d1b2;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.next-booking p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #ddd;
+    text-align: center;
+}
+
+.next-booking p span {
+    font-weight: bold;
+    color: #00d1b2;
+}
+
+.next-booking .status {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #00d1b2;
+    text-align: center;
+    margin-top: 1rem;
 }
 
 /* Admin Section */
@@ -135,7 +181,31 @@ nav button:hover {
     background-color: #1e7e34;
     transform: scale(0.98);
 }
+/* Generate Button Style */
+.generate-button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.4rem;
+    margin: 10px;
+    background-color: #e64a19;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
 
+.generate-button:hover {
+    background-color: #d84315; /* Darker orange */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+.generate-button:active {
+    background-color: #bf360c; /* Darker orange */
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+}
 /* User Section */
 .user-section {
     margin-left: 20px;
@@ -181,42 +251,16 @@ nav button:hover {
     transform: scale(0.98);
 }
 
-/* Generate Button Style */
-.generate-button {
-    font-family: 'Press Start 2P', cursive;
-    padding: 0.8rem 1.4rem;
-    margin: 10px;
-    background-color: #ffc107; /* Yellow color */
-    color: #000; /* Black text color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.generate-button:hover {
-    background-color: #e0a800; /* Darker yellow */
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
-}
-
-.generate-button:active {
-    background-color: #c69500; /* Even darker yellow */
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
-}
-
 /* Info Section */
 .info-section {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 2rem;
+    margin-left: 20px;
     width: 100%;
     box-sizing: border-box;
 }
-
 
 /* Available Rooms Section */
 .available-rooms {
@@ -224,7 +268,6 @@ nav button:hover {
     width: 50%;
 }
 
-/* Room List & Items */
 .room-list {
     list-style: none;
     padding: 0;
@@ -249,45 +292,45 @@ nav button:hover {
     margin: 0.5rem 0;
 }
 
-/* Room Actions */
-.room-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .container {
+        width: 90%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
 }
 
-/* Shared Button Styles */
-.shared-btn {
-    font-family: 'Press Start 2P', cursive;
-    padding: 0.8rem 1.5rem;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-}
+@media (max-width: 992px) {
+    .profile {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.shared-btn:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-}
+    .profile img {
+        margin: 10px 0;
+        height: 200px;
+        width: 200px;
+    }
 
-.shared-btn:active {
-    background-color: #1e7e34;
-    transform: scale(0.98);
-}
+    .user-info {
+        text-align: center;
+        padding-left: 0;
+    }
 
-/* Edit and Delete Buttons */
+    nav button {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+}
 /* Edit and Delete Buttons */
 .edit-btn,
 .delete-btn {
     font-family: 'Press Start 2P', cursive;
     padding: 0.5rem 1rem; /* Smaller padding for smaller button size */
     font-size: 0.8rem; /* Smaller font size */
+    margin-top: 10px;
+    margin-right: 10px;
     border-radius: 4px;
     cursor: pointer;
     text-transform: uppercase;
@@ -327,49 +370,15 @@ nav button:hover {
     background-color: #721c24;
     transform: scale(0.98); /* Slight press effect */
 }
-
-
-/* General Responsive Styles */
-@media (max-width: 1200px) {
-    .container {
-        width: 90%; /* Adjust container width for medium screens */
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-}
-
-@media (max-width: 992px) {
-    .profile {
-        flex-direction: column; /* Stack profile info and image vertically */
-        align-items: center;
-    }
-
-    .profile img {
-        margin: 10px 0;
-        height: 200px;
-        width: 200px;
-    }
-
-    .user-info {
-        text-align: center; /* Center-align text for smaller screens */
-        padding-left: 0;
-    }
-
-    nav button {
-        padding: 0.6rem 1rem; /* Reduce button size for smaller screens */
-        font-size: 0.8rem;
-    }
-}
-
 @media (max-width: 768px) {
     .info-section {
-        flex-direction: column; /* Stack bookings and available rooms vertically */
+        flex-direction: column;
         gap: 1rem;
     }
 
     .bookings,
     .available-rooms {
-        width: 100%; /* Make both sections full-width */
+        width: 100%;
     }
 
     .shared-style {
@@ -377,13 +386,7 @@ nav button:hover {
     }
 
     .shared-btn {
-        padding: 0.6rem 1.2rem; /* Reduce button size */
+        padding: 0.6rem 1.2rem;
         font-size: 0.8rem;
-    }
-
-    .edit-btn,
-    .delete-btn {
-        padding: 0.4rem 0.8rem; /* Smaller size for action buttons */
-        font-size: 0.7rem;
     }
 }

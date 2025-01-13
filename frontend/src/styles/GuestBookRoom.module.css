@@ -1,85 +1,106 @@
-.container {
-    padding: 2rem;
-    font-family: 'Press Start 2P', cursive;
-    background-color: #121212; /* Dark background */
+/* General Styles */
+body {
+    background-color: #000;
     color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.containerBookroom {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     max-width: 800px;
     margin: 2rem auto;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
-.title {
+/* Title */
+.containerBookroom h2 {
+    text-align: center;
     font-size: 2rem;
     margin-bottom: 1.5rem;
-    text-align: center;
-    color: #e0e0e0; /* Light grey for title */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-.message {
+/* Message */
+.messageBookroom {
+    color: #ff5722;
     font-size: 1rem;
-    text-align: center;
     margin-bottom: 1rem;
-    color: #b0b0b0; /* Subtle grey for messages */
+    text-align: center;
 }
 
-.form {
+/* Shared Styles for Forms */
+.sharedStyleBookroom {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-}
-
-.formGroup {
-    background-color: #1f1f1f; /* Slightly lighter grey for input group */
-    border-radius: 8px;
+    gap: 1rem;
     padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-}
-
-.label {
-    font-size: 0.9rem;
-    color: #ccc;
-    margin-bottom: 0.5rem;
-}
-
-.input,
-.select {
     background-color: #1f1f1f;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(255, 255, 255, 0.16);
+}
+
+/* Inputs */
+.inputBookroom,
+.selectBookroom {
+    background-color: #222;
     color: #fff;
     border: 1px solid #444;
     border-radius: 4px;
     padding: 0.8rem;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-family: inherit;
     outline: none;
     transition: border-color 0.3s ease;
-    appearance: none;
 }
 
-.input::placeholder,
-.select::placeholder {
-    color: #aaa;
+/* Focus State for Inputs */
+.inputBookroom:focus,
+.selectBookroom:focus {
+    border-color: #ff5722;
 }
 
-.input[type="date"]::-webkit-calendar-picker-indicator,
-.input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(100%); /* Makes the icons white */
+/* White Icons for Date and Time Inputs */
+.inputBookroom[type="date"]::-webkit-calendar-picker-indicator,
+.inputBookroom[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(100%) brightness(150%); /* Converts the icon to white */
     cursor: pointer;
 }
 
-.input:focus,
-.select:focus {
-    border-color: #888;
+/* Remove default styling for date and time inputs */
+.inputBookroom[type="date"],
+.inputBookroom[type="time"] {
+    appearance: none;
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    color: #fff; /* Text color */
+    background-color: #222; /* Matches input background */
+    border: 1px solid #444; /* Matches input border */
+    padding: 0.8rem;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
 }
 
-.button {
+/* Focus State for Date and Time Inputs */
+.inputBookroom[type="date"]:focus,
+.inputBookroom[type="time"]:focus {
+    border-color: #ff5722;
+    outline: none;
+}
+
+/* Buttons */
+.sharedBtnBookroom {
+    background-color: #ff5722;
+    color: #fff;
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
     font-family: inherit;
-    background-color: #333; /* Neutral grey for buttons */
-    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -88,37 +109,114 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-.button:hover {
-    background-color: #444; /* Darker grey on hover */
-    transform: scale(1.05);
+.sharedBtnBookroom:hover {
+    background-color: #e64a19;
+    transform: scale(1.03);
 }
 
-.button:active {
-    background-color: #555; /* Even darker grey on active */
-    transform: scale(0.95);
+.sharedBtnBookroom:active {
+    background-color: #d84315;
+    transform: scale(0.98);
+}
+
+/* Available Rooms */
+.availableRoomsBookroom {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(255, 255, 255, 0.16);
+}
+
+.availableRoomsBookroom h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.availableRoomsBookroom ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Room Items */
+.roomItemBookroom {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.roomItemBookroom:hover {
+    background-color: #333;
+    transform: scale(1.03);
+}
+
+.roomItemBookroom input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+/* Room Details */
+.roomDetailsBookroom {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #292929;
+}
+
+.roomDetailsBookroom p {
+    margin: 15px 0;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+}
+
+/* Back Button */
+.backBtnBookroom {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.5rem;
+    margin-top: 30px;
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 4px;
+}
+
+.backBtnBookroom:hover {
+    background-color: #fff;
+    color: #000;
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .container {
-        padding: 1rem;
+    .containerBookroom {
+        padding: 1.5rem;
     }
 
-    .title {
-        font-size: 1.5rem;
-    }
-
-    .formGroup {
+    .sharedStyleBookroom {
         padding: 0.8rem;
     }
 
-    .input,
-    .select {
-        font-size: 0.8rem;
+    .inputBookroom {
+        padding: 0.6rem;
+        font-size: 0.9rem;
     }
 
-    .button {
+    .sharedBtnBookroom {
         padding: 0.6rem 1rem;
         font-size: 0.9rem;
+    }
+
+    .availableRoomsBookroom {
+        padding: 0.8rem;
+    }
+
+    .roomItemBookroom {
+        padding: 0.8rem;
     }
 }

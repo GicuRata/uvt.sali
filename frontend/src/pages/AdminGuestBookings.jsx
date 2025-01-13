@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import styles from "../styles/AdminGuestBookings.module.css";
 
 const AdminGuestBookings = () => {
     const [guestBookings, setGuestBookings] = useState([]);
     const [message, setMessage] = useState("");
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         const fetchGuestBookings = async () => {
@@ -62,18 +64,27 @@ const AdminGuestBookings = () => {
         }
     };
 
+    // Sort guest bookings to prioritize pending, approved, and denied
+    const sortedGuestBookings = guestBookings.sort((a, b) => {
+        const statusOrder = { pending: 1, approved: 2, denied: 3 };
+        return statusOrder[a.status] - statusOrder[b.status];
+    });
+
     return (
         <div className={styles.container}>
+            <button className={styles.backButton} onClick={() => navigate(-1)}>
+                Back
+            </button>
             <h2 className={styles.title}>Guest Bookings (Admin)</h2>
             {message && <p className={styles.message}>{message}</p>}
             <ul className={styles.bookingList}>
-                {guestBookings.length === 0 ? (
+                {sortedGuestBookings.length === 0 ? (
                     <p className={styles.message}>No guest bookings found.</p>
                 ) : (
-                    guestBookings.map((b) => (
+                    sortedGuestBookings.map((b) => (
                         <li key={b._id} className={styles.bookingCard}>
                             <p className={styles.bookingDetails}>
-                                <strong>Full Name:</strong> {b.fullName} <br />
+                                <strong>Full Name:</strong> {b.fullName} <br/>
                                 <strong>Email:</strong> {b.email}
                             </p>
                             <p className={styles.bookingDetails}>
@@ -83,12 +94,12 @@ const AdminGuestBookings = () => {
                             <p className={styles.bookingDetails}>
                                 <strong>Date:</strong>{" "}
                                 {b.date && new Date(b.date).toLocaleDateString()} |{" "}
-                                <strong>Time:</strong> {b.startTime} - {b.endTime} <br />
-                                <strong>Status:</strong> {b.status}
+                                <strong>Time:</strong> {b.startTime} - {b.endTime}
                             </p>
-                            <p className={styles.bookingDetails}>
-                                <strong>Created At:</strong>{" "}
-                                {new Date(b.createdAt).toLocaleString()}
+                            <p
+                                className={`${styles.bookingDetails} ${styles.status} ${styles[b.status.toLowerCase()]}`}
+                            >
+                                Status: {b.status}
                             </p>
                             {b.status === "pending" && (
                                 <div className={styles.buttonGroup}>
@@ -99,7 +110,7 @@ const AdminGuestBookings = () => {
                                         Approve
                                     </button>
                                     <button
-                                        className={styles.button}
+                                        className={`${styles.button} ${styles.denyButton}`}
                                         onClick={() => handleDeny(b._id)}
                                     >
                                         Deny

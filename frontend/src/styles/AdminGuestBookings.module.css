@@ -53,11 +53,27 @@
     line-height: 1.4;
 }
 
+/* Status Colors */
 .status {
     font-size: 1rem;
     font-weight: bold;
-    color: #fff; /* White for status */
     margin-top: 0.5rem;
+    text-transform: uppercase;
+}
+
+.status.pending {
+    color: #ff9800; /* Orange for Pending */
+    text-shadow: 0 0 5px rgba(255, 152, 0, 0.8);
+}
+
+.status.approved {
+    color: #4caf50; /* Green for Approved */
+    text-shadow: 0 0 5px rgba(76, 175, 80, 0.8);
+}
+
+.status.denied {
+    color: #f44336; /* Red for Denied */
+    text-shadow: 0 0 5px rgba(244, 67, 54, 0.8);
 }
 
 .buttonGroup {
@@ -89,7 +105,22 @@
     background-color: #555; /* Even darker grey on active */
     transform: scale(0.95);
 }
+.backButton {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.5rem;
+    margin-top: 30px;
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 4px;
+}
 
+.backButton:hover {
+    background-color: #fff;
+    color: #000;
+}
 /* Responsive Styles */
 @media (max-width: 768px) {
     .container {

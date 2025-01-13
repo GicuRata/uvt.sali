@@ -235,12 +235,18 @@ const Dashboard = () => {
                     </div>
                 )}
                 {user.role === "user" && nextBooking && (
-                    <div style={{ marginTop: "1rem" }}>
+                    <div className="next-booking">
                         <h2>Your Next Booking</h2>
-                        <p>Room: {nextBooking.room?.name}</p>
-                        <p>Date: {nextBooking.date?.slice(0, 10)}</p>
-                        <p>Time: {nextBooking.startTime} - {nextBooking.endTime}</p>
-                        <p>Status: {nextBooking.status}</p>
+                        <p>
+                            Room: <span>{nextBooking.room?.name}</span>
+                        </p>
+                        <p>
+                            Date: <span>{nextBooking.date?.slice(0, 10)}</span>
+                        </p>
+                        <p>
+                            Time: <span>{nextBooking.startTime} - {nextBooking.endTime}</span>
+                        </p>
+                        <p className="status">Status: {nextBooking.status}</p>
                     </div>
                 )}
                 {user.role === "user" && (

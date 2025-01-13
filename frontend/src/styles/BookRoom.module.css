@@ -143,7 +143,33 @@ body{
 .roomItemBookroom input[type="radio"] {
     margin-right: 0.5rem;
 }
+.roomDetailsBookroom {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
+.roomDetailsBookroom p {
+    margin: 10px
+}
+
+.backBtnBookroom {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.5rem;
+    margin-top: 30px;
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 4px;
+}
+
+.backBtnBookroom:hover {
+    background-color: #fff;
+    color: #000;
+}
 /* Responsive Styles */
 @media (max-width: 768px) {
     .containerBookroom {
