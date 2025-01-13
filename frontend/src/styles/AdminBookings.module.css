@@ -53,50 +53,64 @@
     line-height: 1.4;
 }
 
+/* Dynamic Status Colors */
 .status {
     font-size: 1rem;
     font-weight: bold;
-    color: #fff; /* White for status */
     margin-top: 0.5rem;
-}
-
-.buttonGroup {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: flex-start;
-    margin-top: 1rem;
-}
-
-.button {
-    padding: 0.6rem 1rem;
-    font-size: 0.8rem;
-    font-family: inherit;
-    background-color: #333; /* Neutral grey for buttons */
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
     text-transform: uppercase;
 }
 
-.button:hover {
-    background-color: #444; /* Darker grey on hover */
-    transform: scale(1.05);
+.status.pending {
+    color: #ff9800; /* Orange for Pending */
+    text-shadow: 0 0 5px rgba(255, 152, 0, 0.8);
 }
 
-.button:active {
-    background-color: #555; /* Even darker grey on active */
-    transform: scale(0.95);
+.status.approved {
+    color: #4caf50; /* Green for Approved */
+    text-shadow: 0 0 5px rgba(76, 175, 80, 0.8);
 }
 
+.status.denied {
+    color: #f44336; /* Red for Denied */
+    text-shadow: 0 0 5px rgba(244, 67, 54, 0.8);
+}
+.backButton {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.8rem 1.5rem;
+    margin-top: 30px;
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 4px;
+}
+
+.backButton:hover {
+    background-color: #fff;
+    color: #000;
+}
+.approveButton{
+    border: none;
+    background-color: #4caf50; /* Green for Approved */
+    color: #fff;
+    margin-right: 10px;
+}
+.approveButton:hover {
+    background-color: #388e3c;
+}
+.approveButton:active {
+    background-color: #666;
+}
 .denyButton {
-    background-color: #444; /* Slightly darker for deny */
+    border: none;
+    background-color: #f44336; /* Red for Denied */
+    color: #fff;
 }
 
 .denyButton:hover {
-    background-color: #555;
+    background-color: #d32f2f;
 }
 
 .denyButton:active {

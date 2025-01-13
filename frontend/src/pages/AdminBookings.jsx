@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import styles from "../styles/AdminBookings.module.css";
 
 const AdminBookings = () => {
     const [bookings, setBookings] = useState([]);
     const [message, setMessage] = useState("");
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -64,15 +66,26 @@ const AdminBookings = () => {
         }
     };
 
+    // Sort bookings to show pending bookings first
+    const sortedBookings = bookings.sort((a, b) => {
+        const statusOrder = { pending: 1, approved: 2, denied: 3 };
+        return statusOrder[a.status] - statusOrder[b.status];
+    });
+
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>All Bookings (Admin)</h2>
+            <div className={styles.header}>
+                <button className={styles.backButton} onClick={() => navigate(-1)}>
+                    Back
+                </button>
+                <h2 className={styles.title}>All Bookings (Admin)</h2>
+            </div>
             {message && <p className={styles.message}>{message}</p>}
             <ul className={styles.bookingList}>
-                {bookings.length === 0 ? (
+                {sortedBookings.length === 0 ? (
                     <p className={styles.noBookings}>No bookings found.</p>
                 ) : (
-                    bookings.map((b) => (
+                    sortedBookings.map((b) => (
                         <li key={b._id} className={styles.bookingCard}>
                             <p className={styles.bookingDetails}>
                                 <strong>Room:</strong> {b.room?.name} | <strong>Location:</strong>{" "}
@@ -85,13 +98,15 @@ const AdminBookings = () => {
                                 <strong>Date:</strong> {b.date?.slice(0, 10)} |{" "}
                                 <strong>Time:</strong> {b.startTime} - {b.endTime}
                             </p>
-                            <p className={`${styles.bookingDetails} ${styles.status}`}>
+                            <p
+                                className={`${styles.bookingDetails} ${styles.status} ${styles[b.status.toLowerCase()]}`}
+                            >
                                 Status: {b.status}
                             </p>
                             {b.status === "pending" && (
                                 <div className={styles.buttonGroup}>
                                     <button
-                                        className={styles.button}
+                                        className={styles.approveButton}
                                         onClick={() => handleApprove(b._id)}
                                     >
                                         Approve

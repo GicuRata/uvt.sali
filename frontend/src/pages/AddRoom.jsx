@@ -61,7 +61,7 @@ const AddRoom = () => {
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="name">Room Name:</label>
+                        <label htmlFor="name" className={styles.inputTitle}>Room Name:</label>
                         <input
                             type="text"
                             id="name"
@@ -72,7 +72,7 @@ const AddRoom = () => {
                         />
                     </div>
                     <div className={styles.formGroup}>
-                        <label htmlFor="location">Location:</label>
+                        <label htmlFor="location" className={styles.inputTitle}>Location:</label>
                         <input
                             type="text"
                             id="location"
@@ -83,7 +83,7 @@ const AddRoom = () => {
                         />
                     </div>
                     <div className={styles.formGroup}>
-                        <label htmlFor="capacity">Capacity:</label>
+                        <label htmlFor="capacity" className={styles.inputTitle}>Capacity:</label>
                         <input
                             type="number"
                             id="capacity"
@@ -94,7 +94,7 @@ const AddRoom = () => {
                         />
                     </div>
                     <div className={styles.formGroup}>
-                        <label htmlFor="equipment">Equipment (comma-separated):</label>
+                        <label htmlFor="equipment" className={styles.inputTitle}>Equipment (comma-separated):</label>
                         <input
                             type="text"
                             id="equipment"
@@ -104,7 +104,7 @@ const AddRoom = () => {
                         />
                     </div>
                     <div className={styles.formGroup}>
-                        <label htmlFor="description">Description:</label>
+                        <label htmlFor="description" className={styles.inputTitle}>Description:</label>
                         <textarea
                             id="description"
                             name="description"
