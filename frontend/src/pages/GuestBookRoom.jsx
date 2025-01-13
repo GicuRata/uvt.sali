@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import styles from "../styles/GuestBookRoom.module.css";
 
 export default function GuestBookRoom() {
     const [fullName, setFullName] = useState("");
@@ -12,7 +13,6 @@ export default function GuestBookRoom() {
     const [message, setMessage] = useState("");
 
     useEffect(() => {
-        // fetch all rooms
         const fetchRooms = async () => {
             try {
                 const res = await axios.get(
@@ -30,14 +30,12 @@ export default function GuestBookRoom() {
         e.preventDefault();
         setMessage("");
 
-        // Basic check
         if (startTime >= endTime) {
             setMessage("Start time must be less than end time.");
             return;
         }
 
         try {
-            // Public endpoint to create a guest booking
             const res = await axios.post(
                 `${import.meta.env.VITE_API_URL}/api/guest-bookings/create`,
                 {
@@ -49,7 +47,7 @@ export default function GuestBookRoom() {
                     endTime,
                 }
             );
-            setMessage(res.data.message || "Booking request created");
+            setMessage(res.data.message || "Booking request created successfully.");
         } catch (err) {
             console.error("Guest booking error:", err);
             setMessage(err.response?.data?.message || "Failed to create guest booking.");
@@ -57,35 +55,38 @@ export default function GuestBookRoom() {
     };
 
     return (
-        <div style={{ padding: "2rem" }}>
-            <h1>Book a Room (Guest)</h1>
-            {message && <p>{message}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Full Name:</label>
+        <div className={styles.container}>
+            <h1 className={styles.title}>Book a Room (Guest)</h1>
+            {message && <p className={styles.message}>{message}</p>}
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Full Name:</label>
                     <input
                         type="text"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
+                        className={styles.input}
                         required
                     />
                 </div>
 
-                <div>
-                    <label>Email:</label>
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Email:</label>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        className={styles.input}
                         required
                     />
                 </div>
 
-                <div>
-                    <label>Select Room:</label>
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Select Room:</label>
                     <select
                         value={roomId}
                         onChange={(e) => setRoomId(e.target.value)}
+                        className={styles.select}
                         required
                     >
                         <option value="">-- Choose a room --</option>
@@ -97,37 +98,42 @@ export default function GuestBookRoom() {
                     </select>
                 </div>
 
-                <div>
-                    <label>Date:</label>
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Date:</label>
                     <input
                         type="date"
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
+                        className={styles.input}
                         required
                     />
                 </div>
 
-                <div>
-                    <label>Start Time (HH:mm):</label>
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Start Time (HH:mm):</label>
                     <input
                         type="time"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
+                        className={styles.input}
                         required
                     />
                 </div>
 
-                <div>
-                    <label>End Time (HH:mm):</label>
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>End Time (HH:mm):</label>
                     <input
                         type="time"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
+                        className={styles.input}
                         required
                     />
                 </div>
 
-                <button type="submit">Submit Booking</button>
+                <button type="submit" className={styles.button}>
+                    Submit Booking
+                </button>
             </form>
         </div>
     );

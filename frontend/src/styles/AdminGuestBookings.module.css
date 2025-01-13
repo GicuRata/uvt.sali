@@ -25,12 +25,12 @@
 }
 
 .bookingList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
     list-style: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
 }
 
 .bookingCard {
@@ -63,7 +63,6 @@
 .buttonGroup {
     display: flex;
     gap: 0.5rem;
-    justify-content: flex-start;
     margin-top: 1rem;
 }
 
@@ -89,18 +88,6 @@
 .button:active {
     background-color: #555; /* Even darker grey on active */
     transform: scale(0.95);
-}
-
-.denyButton {
-    background-color: #444; /* Slightly darker for deny */
-}
-
-.denyButton:hover {
-    background-color: #555;
-}
-
-.denyButton:active {
-    background-color: #666;
 }
 
 /* Responsive Styles */

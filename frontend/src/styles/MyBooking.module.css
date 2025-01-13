@@ -62,7 +62,6 @@
     cursor: pointer;
     text-transform: uppercase;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 3px 6px rgba(255, 77, 77, 0.3);
 }
 
 .cancelButton:hover {

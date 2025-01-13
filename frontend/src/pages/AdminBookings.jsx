@@ -83,12 +83,10 @@ const AdminBookings = () => {
                             </p>
                             <p className={styles.bookingDetails}>
                                 <strong>Date:</strong> {b.date?.slice(0, 10)} |{" "}
-                                <strong>Time:</strong> {b.startTime} - {b.endTime} |{" "}
-                                <strong>Status:</strong> {b.status}
+                                <strong>Time:</strong> {b.startTime} - {b.endTime}
                             </p>
-                            <p className={styles.bookingDetails}>
-                                <strong>Created At:</strong>{" "}
-                                {new Date(b.createdAt).toLocaleString()}
+                            <p className={`${styles.bookingDetails} ${styles.status}`}>
+                                Status: {b.status}
                             </p>
                             {b.status === "pending" && (
                                 <div className={styles.buttonGroup}>
@@ -99,7 +97,7 @@ const AdminBookings = () => {
                                         Approve
                                     </button>
                                     <button
-                                        className={styles.button}
+                                        className={`${styles.button} ${styles.denyButton}`}
                                         onClick={() => handleDeny(b._id)}
                                     >
                                         Deny
