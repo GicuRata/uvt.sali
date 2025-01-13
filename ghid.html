@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <!-- Metadate DC (Dublin Core) pentru Scholarly HTML -->
+    <meta name="dc.title" content="Ghid de utilizare a aplicației uvt.sali" />
+    <meta name="dc.creator" content="Gicu Rata, Alexandru Culicov, Mihail Crivoi" />
+    <meta name="dc.contributor" content="Gicu Rata" />
+    <meta name="dc.description"
+        content="Un ghid de utilizare a aplicației de gestionare a sălilor, dezvoltată cu stack-ul MERN." />
+    <meta name="dc.subject" content="Management săli, Rezervări, MERN" />
+    <meta name="dc.type" content="Manual" />
+    <meta name="dc.format" content="text/html" />
+    <meta name="dc.language" content="ro" />
+
+    <title>Ghid de utilizare - Aplicație uvt.sali</title>
+
+    <style>
+        body {
+            margin: 2rem auto;
+            max-width: 900px;
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Arial', sans-serif;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header,
+        footer {
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #ccc;
+            margin-bottom: 2rem;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        nav li {
+            margin: 0.5rem 0;
+        }
+
+        .frontmatter,
+        .body,
+        .backmatter {
+            margin-bottom: 2rem;
+        }
+
+        .toc {
+            background: #f8f8f8;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            margin: 1rem 0;
+        }
+
+        code,
+        pre {
+            background: #f4f4f4;
+            font-family: Consolas, monospace;
+            padding: 0.2rem 0.4rem;
+        }
+
+        .highlight {
+            background-color: #ffffcc;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Frontmatter: secțiune introductivă, titlu, autori, rezumat -->
+    <section class="frontmatter" id="frontmatter">
+        <header>
+            <h1>Ghid de utilizare a aplicației uvt.sali</h1>
+            <p><strong>Versiunea:</strong> 1.0</p>
+            <p><strong>Data publicării:</strong> 13 ianuarie 2025</p>
+        </header>
+
+        <section>
+            <h2>Rezumat</h2>
+            <p>Acest document descrie pașii de instalare, configurare și utilizare a unei aplicații web dezvoltate cu
+                ajutorul stack-ului MERN (MongoDB, Express.js, React, Node.js). Aplicația permite rezervarea sălilor și
+                include funcționalități de autentificare, gestionare a utilizatorilor și administrare a rezervărilor.
+            </p>
+        </section>
+
+        <!-- Tabel de conținut (TOC) pentru navigare -->
+        <nav class="toc">
+            <h2>Cuprins</h2>
+            <ul>
+                <li><a href="#introducere">1. Introducere</a></li>
+                <li><a href="#instalare">2. Instalare și configurare</a></li>
+                <li><a href="#utilizare">3. Utilizare</a>
+                    <ul>
+                        <li><a href="#user-flow">3.1 Flux de utilizator (User)</a></li>
+                        <li><a href="#admin-flow">3.2 Flux de administrator (Admin)</a></li>
+                    </ul>
+                </li>
+                <li><a href="#functii-cheie">4. Funcții cheie</a></li>
+                <li><a href="#ghid-tehnic">5. Ghid tehnic (pentru dezvoltatori)</a></li>
+                <li><a href="#resurse">6. Resurse și Contact</a></li>
+            </ul>
+        </nav>
+    </section>
+
+    <!-- Body: conținutul principal al ghidului -->
+    <section class="body" id="body">
+        <!-- 1. Introducere -->
+        <article id="introducere">
+            <header>
+                <h2>1. Introducere</h2>
+            </header>
+            <p>Aplicația uvt.sali pentru gestionarea sălilor și rezervărilor oferă atât utilizatorilor înregistrați, cât
+                și
+                vizitatorilor (guest) posibilitatea de a solicita și administra rezervări. Administratori pot
+                aproba/respinge cererile, adăuga săli noi și gestiona toate rezervările. Această secțiune descrie scopul
+                aplicației și componentele sale principale.</p>
+        </article>
+
+        <!-- 2. Instalare și configurare -->
+        <article id="instalare">
+            <header>
+                <h2>2. Instalare și configurare</h2>
+            </header>
+
+            <h3>Cerințe de sistem</h3>
+            <ul>
+                <li>Node.js >= v22.11.0</li>
+                <li>MongoDB remote database </li>
+                <li>NPM >= 10.9.0</li>
+                <li>React >= 18.3.1</li>
+            </ul>
+
+            <h3>Pași de instalare</h3>
+            <ol>
+                <li><strong>Descărcați codul sursă</strong> din depozitul Git.</li>
+                <li><strong>Instalați dependențele:</strong>
+                    <pre><code># În terminal, rulați (din folderul rădăcină):
+npm run build
+</code></pre>
+                </li>
+                <li><strong>Configurați variabilele de mediu</strong> într-un fișier <code>.env</code>:
+                    <ul>
+                        <li><code>PORT</code> – Portul pe care rulează serverul Node.js</li>
+                        <li><code>MONGO_URI</code> – URL pentru conexiune la MongoDB</li>
+                        <li><code>JWT_SECRET</code> – Cheia secretă pentru semnarea token-urilor JWT</li>
+                        <li><code>ADMIN_SECRET</code> – Cheie pentru crearea conturilor de administrator</li>
+                        <li><code>EMAIL_USER</code> și <code>EMAIL_PASS</code> – Pentru trimitere e-mailuri (dacă este
+                            necesar)</li>
+                    </ul>
+                </li>
+                <li><strong>Porniți aplicația</strong>:
+                    <pre><code>
+npm run prod
+</code></pre>
+                    Acest script poate rula atât serverul, cât și clientul.
+                </li>
+            </ol>
+        </article>
+
+        <!-- 3. Utilizare -->
+        <article id="utilizare">
+            <header>
+                <h2>3. Utilizare</h2>
+            </header>
+            <p>Aplicația oferă un panou de control (Dashboard) pentru utilizatori și administratori, precum și o pagină
+                publică pentru rezervări de tip "guest".</p>
+
+            <!-- 3.1 Flux de utilizator (User) -->
+            <section id="user-flow">
+                <h3>3.1 Flux de utilizator (User)</h3>
+                <ol>
+                    <li><strong>Înregistrare (Register)</strong>: Utilizatorii își pot crea cont folosind nume, e-mail
+                        și parolă.</li>
+                    <li><strong>Autentificare (Login)</strong>: Utilizatorii se autentifică cu e-mail și parolă.</li>
+                    <li><strong>Dashboard</strong>: După logare, utilizatorul vede o listă cu săli disponibile, poate
+                        face rezervări și poate consulta rezervările proprii.</li>
+                    <li><strong>Rezervare</strong>: Pentru a rezerva o sală, utilizatorul accesează "Book Room",
+                        introduce data/ora si alege o sală disponibilă.</li>
+                    <li><strong>Vizualizare rezervări</strong>: Pagina "My Bookings" afișează rezervările curente.
+                </ol>
+            </section>
+
+            <!-- 3.2 Flux de administrator (Admin) -->
+            <section id="admin-flow">
+                <h3>3.2 Flux de administrator (Admin)</h3>
+                <ol>
+                    <li><strong>Creare cont Admin</strong>: Se face printr-un endpoint special
+                        (<code>/api/auth/create-admin</code>, ce poate fi accesată doar de un admin) unde se utilizează
+                        <code>ADMIN_SECRET</code>.
+                    </li>
+                    <li><strong>Adăugare săli</strong>: În secțiunea "Add Room", administratorul introduce nume,
+                        locație, capacitate, echipamente etc.</li>
+                    <li><strong>Editare/Ștergere săli</strong>: Administratorul poate modifica și șterge săli existente.
+                    </li>
+                    <li><strong>Gestionare rezervări</strong>: Administratorul vede toate rezervările, poate aproba,
+                        respinge sau anula. Tot aici se găsesc și rezervările de tip "guest".</li>
+                    <li><strong>Generare QR code pentru invitați</strong>: Aplicația permite generarea unui QR code
+                        pentru pagina de guest booking (de ex. <code>/guest-book-room</code>).</li>
+                </ol>
+            </section>
+        </article>
+
+        <!-- 4. Funcții cheie -->
+        <article id="functii-cheie">
+            <header>
+                <h2>4. Funcții cheie</h2>
+            </header>
+            <ul>
+                <li><strong>Autentificare și Autorizare</strong> (JWT): protecția resurselor pe baza token-urilor JWT.
+                </li>
+                <li><strong>Creare/Administrare Săli</strong>: Adăugare, editare, ștergere, listare săli.</li>
+                <li><strong>Rezervări Utilizatori</strong>: Cerere rezervare, listare, anulare.</li>
+                <li><strong>Rezervări Guest</strong>: Cerere rezervare fără cont, cu aprobare necesară.</li>
+                <li><strong>Notificări e-mail</strong> (pentru vizitatori): Trimitere email pentru confirmări/respingeri
+                    de
+                    rezervări.</li>
+            </ul>
+        </article>
+
+        <!-- 5. Ghid tehnic (pentru dezvoltatori) -->
+        <article id="ghid-tehnic">
+            <header>
+                <h2>5. Ghid tehnic (pentru dezvoltatori)</h2>
+            </header>
+            <p>Secțiunea următoare oferă detalii pentru programatori sau cei care doresc să extindă funcționalitățile
+                existente.</p>
+
+            <h3>Strucura proiectului (backend)</h3>
+            <ul>
+                <li><code>models</code> – conține schemele Mongoose (ex.: <code>user.model.js</code>,
+                    <code>booking.model.js</code> etc.)
+                </li>
+                <li><code>routes</code> – definesc rutele REST pentru authetificare, rezervări, guest-booking, săli etc.
+                </li>
+                <li><code>controllers</code> – logica de business pentru fiecare operație (ex.:
+                    <code>booking.controller.js</code>)
+                </li>
+                <li><code>config</code> – fișiere de configurare (ex.: <code>db.js</code> pentru MongoDB,
+                    <code>.env</code> pentru variabile de mediu)
+                </li>
+                <li><code>server.js</code> – fișierul principal care pornește Express.js</li>
+            </ul>
+
+            <h3>Strucura proiectului (frontend, React)</h3>
+            <ul>
+                <li><code>src/pages</code> – componente de pagină (ex.: <code>Login.jsx</code>,
+                    <code>Dashboard.jsx</code>, <code>MyBookings.jsx</code>)
+                </li>
+                <li><code>src/components</code> – componente reutilizabile (ex.: <code>ProtectedRoute.jsx</code>,
+                    <code>AdminRoute.jsx</code>)
+                </li>
+                <li><code>src/context</code> – context global pentru autentificare (ex.: <code>auth.context.jsx</code>)
+                </li>
+                <li><code>src/styles</code> – fișiere de stil (CSS/SASS)</li>
+                <li><code>App.jsx</code> – configurarea principală a rutelor din React Router</li>
+            </ul>
+
+            <h3>Extensii posibile</h3>
+            <ul>
+                <li><strong>Integrare cu calendare externe</strong> (ex.: Google Calendar)</li>
+                <li><strong>Roluri suplimentare</strong> (ex.: teacher)</li>
+                <li><strong>Raportare și statistici</strong> (PDF, export CSV etc.)</li>
+            </ul>
+        </article>
+
+        <!-- 6. Resurse și Contact -->
+        <article id="resurse">
+            <header>
+                <h2>6. Resurse și Contact</h2>
+            </header>
+            <p>Mai jos sunt câteva link-uri utile și date de contact pentru raportarea problemelor sau cererea de noi
+                funcționalități.</p>
+            <ul>
+                <li><a href="https://nodejs.org/">Node.js</a></li>
+                <li><a href="https://expressjs.com/">Express.js</a></li>
+                <li><a href="https://reactjs.org/">React</a></li>
+                <li><a href="https://www.mongodb.com/">MongoDB</a></li>
+            </ul>
+            <p><strong>Contact:</strong> <em>mihail.crivoi00@e-uvt.ro</em></p>
+        </article>
+    </section>
+
+    <!-- Backmatter: conținut final, anexe, referințe -->
+    <section class="backmatter" id="backmatter">
+        <footer>
+            <p>Copyright &copy; 2025 Echipa de Dezvoltare. Toate drepturile rezervate.</p>
+            <p>Acest ghid poate fi actualizat periodic. Vizitați depozitul oficial pentru cea mai nouă versiune.</p>
+        </footer>
+    </section>
+</body>
+
+</html>
