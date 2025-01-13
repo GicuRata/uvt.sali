@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import styles from "../styles/AdminGuestBookings.module.css";
 
 const AdminGuestBookings = () => {
     const [guestBookings, setGuestBookings] = useState([]);
@@ -62,40 +63,49 @@ const AdminGuestBookings = () => {
     };
 
     return (
-        <div style={{ padding: "2rem" }}>
-            <h2>Guest Bookings (Admin)</h2>
-            {message && <p>{message}</p>}
-            <ul>
+        <div className={styles.container}>
+            <h2 className={styles.title}>Guest Bookings (Admin)</h2>
+            {message && <p className={styles.message}>{message}</p>}
+            <ul className={styles.bookingList}>
                 {guestBookings.length === 0 ? (
-                    <p>No guest bookings found.</p>
+                    <p className={styles.message}>No guest bookings found.</p>
                 ) : (
                     guestBookings.map((b) => (
-                        <li key={b._id} style={{ marginBottom: "1rem" }}>
-                            <p>
+                        <li key={b._id} className={styles.bookingCard}>
+                            <p className={styles.bookingDetails}>
                                 <strong>Full Name:</strong> {b.fullName} <br />
                                 <strong>Email:</strong> {b.email}
                             </p>
-                            <p>
+                            <p className={styles.bookingDetails}>
                                 <strong>Room:</strong> {b.room?.name} |{" "}
                                 <strong>Location:</strong> {b.room?.location}
                             </p>
-                            <p>
+                            <p className={styles.bookingDetails}>
                                 <strong>Date:</strong>{" "}
                                 {b.date && new Date(b.date).toLocaleDateString()} |{" "}
                                 <strong>Time:</strong> {b.startTime} - {b.endTime} <br />
                                 <strong>Status:</strong> {b.status}
                             </p>
-                            <p>
+                            <p className={styles.bookingDetails}>
                                 <strong>Created At:</strong>{" "}
                                 {new Date(b.createdAt).toLocaleString()}
                             </p>
                             {b.status === "pending" && (
-                                <>
-                                    <button onClick={() => handleApprove(b._id)}>Approve</button>
-                                    <button onClick={() => handleDeny(b._id)}>Deny</button>
-                                </>
+                                <div className={styles.buttonGroup}>
+                                    <button
+                                        className={styles.button}
+                                        onClick={() => handleApprove(b._id)}
+                                    >
+                                        Approve
+                                    </button>
+                                    <button
+                                        className={styles.button}
+                                        onClick={() => handleDeny(b._id)}
+                                    >
+                                        Deny
+                                    </button>
+                                </div>
                             )}
-                            <hr />
                         </li>
                     ))
                 )}

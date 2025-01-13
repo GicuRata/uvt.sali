@@ -20,6 +20,7 @@ const Dashboard = () => {
     const [guestRoomId, setGuestRoomId] = useState("");
 
     const [qrValue, setQrValue] = useState("");
+    const [showQr, setShowQr] = useState(false); // State to manage QR visibility
 
     useEffect(() => {
         const fetchRooms = async () => {
@@ -163,6 +164,7 @@ const Dashboard = () => {
 
     const handleGenerateQr = () => {
         setQrValue(`${window.location.origin}/guest-book-room`);
+        setShowQr(true); // Show the QR code when generated
     };
 
     return (
@@ -185,24 +187,34 @@ const Dashboard = () => {
                 {user.role === "admin" && (
                     <div className="admin-section">
                         <h2>Admin Section</h2>
-                        <button onClick={() => navigate("/admin/add-room")}>Add Room</button>
-                        <button onClick={handleGoToAdminBookings}>Manage Bookings</button>
-                        <button onClick={() => navigate("/admin/guest-bookings")}>Manage Guest Bookings</button>
-                        <div style={{ marginTop: "1rem" }}>
-                            <button onClick={handleGenerateQr}>Generate QR for Guest Booking</button>
-                            {qrValue && (
-                                <div style={{ marginTop: "1rem" }}>
-                                    <QRCode value={qrValue} />
+                        <button onClick={() => navigate("/admin/add-room")} className="admin-btn">Add Room</button>
+                        <button onClick={handleGoToAdminBookings} className="admin-btn">Manage Bookings</button>
+                        <button onClick={() => navigate("/admin/guest-bookings")} className="admin-btn">Manage Guest Bookings</button>
+                        <div style={{marginTop: "1rem"}}>
+                            <button onClick={handleGenerateQr} className="generate-button">Generate QR for Guest
+                                Booking
+                            </button>
+                            {showQr && qrValue && (
+                                <div style={{marginTop: "1rem"}}>
+                                    <div>
+                                        <QRCode value={qrValue}/>
+                                    </div>
+                                    <button onClick={() => setShowQr(false)} className="generate-button">
+                                        Hide QR
+                                    </button>
+
                                 </div>
+
                             )}
+
                         </div>
                     </div>
                 )}
                 {user.role === "user" && (
                     <div className="user-section">
-                        <h2>User Bookings</h2>
-                        <button onClick={handleGoToBookRoom}>Book a Room</button>
-                        <button onClick={handleGoToMyBookings}>My Bookings</button>
+                    <h2>User Bookings</h2>
+                        <button onClick={handleGoToBookRoom} className="user-btn">Book a Room</button>
+                        <button onClick={handleGoToMyBookings} className="user-btn">My Bookings</button>
                     </div>
                 )}
                 <div className="info-section">
