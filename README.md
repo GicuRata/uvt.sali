@@ -23,7 +23,6 @@ This document describes the steps for installation, configuration, and usage of 
    2. [Admin Flow](#admin-flow)  
 4. [Key Features](#key-features)  
 5. [Technical Guide (for Developers)](#technical-guide-for-developers)  
-6. [Resources and Contact](#resources-and-contact)
 
 ---
 
@@ -124,25 +123,6 @@ This section provides details for programmers or those who wish to extend the ex
 - **src/context** – Global context for authentication (e.g., `auth.context.jsx`)
 - **src/styles** – Style files (CSS/SASS)
 - **App.jsx** – Main configuration of routes using React Router
-
-### Possible Extensions
-
-- **Integration with External Calendars** (e.g., Google Calendar)
-- **Additional Roles** (e.g., teacher)
-- **Reporting and Analytics** (PDF, CSV export, etc.)
-
----
-
-## Resources and Contact
-
-Below are some useful links and contact information for reporting issues or requesting new features.
-
-- [Node.js](https://nodejs.org/)
-- [Express.js](https://expressjs.com/)
-- [React](https://reactjs.org/)
-- [MongoDB](https://www.mongodb.com/)
-
-**Contact:** <mihail.crivoi00@e-uvt.ro>
 
 ---
 
